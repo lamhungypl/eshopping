@@ -24,3 +24,5 @@ Route::get('/admin/dashboard', 'AdminController@dashboard');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/logout', 'AdminController@logout');
