@@ -17,13 +17,18 @@ class AdminController extends Controller
             $data = $request->input();
             if (Auth::attempt(['email' => $data['username'], 'password' => $data['password'], 'admin' => '1'])) {
                 # code...
-                echo 'success';
-                die;
+                // echo 'success';
+                // die;
+                return redirect('/admin/dashboard');
             } else {
                 echo 'failed';
                 die;
             }
         }
         return view("admin.admin_login");
+    }
+    public function dashboard()
+    {
+        return view('admin.dashboard');
     }
 }
