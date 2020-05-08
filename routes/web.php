@@ -16,9 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::match(['get', 'post'], '/admin', function () {
-    return view('AdminController@login');
-});
+Route::match(['get', 'post'], '/admin', 'AdminController@login');
+
 
 Auth::routes();
 
