@@ -19,10 +19,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::match(['get', 'post'], '/admin', 'AdminController@login');
-Route::get('/admin/dashboard', 'AdminController@dashboard');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/logout', 'AdminController@logout');
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/admin/dashboard', 'AdminController@dashboard');
+});
