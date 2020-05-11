@@ -1,11 +1,11 @@
 <!--sidebar-menu-->
 <div id="sidebar">
-    <a href="#" class="visible-phone"
+    <a href="{{url("/admin/dashboard")}}" class="visible-phone"
         ><i class="icon icon-home"></i> Dashboard</a
     >
     <ul>
         <li class="active">
-            <a href="index.html"
+            <a href="{{url("/admin/dashboard")}}"
                 ><i class="icon icon-home"></i> <span>Dashboard</span></a
             >
         </li>
@@ -60,7 +60,7 @@
                 <span class="label label-important">5</span></a
             >
             <ul>
-                <li><a href="index2.html">Dashboard2</a></li>
+                <li><a href="{{url("/admin/dashboard")}}">Dashboard2</a></li>
                 <li><a href="gallery.html">Gallery</a></li>
                 <li><a href="calendar.html">Calendar</a></li>
                 <li><a href="invoice.html">Invoice</a></li>
