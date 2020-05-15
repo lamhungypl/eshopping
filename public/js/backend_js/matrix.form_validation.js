@@ -1,4 +1,24 @@
 $(document).ready(function () {
+    $("#submit_change_password").click(() => {
+        const currentPassword = $("#current_password").val();
+        // console.log({ currentPassword });
+        $.ajax({
+            type: "get",
+            url: "/admin/check-password",
+            data: { currentPassword: currentPassword },
+            success: res => {
+                if (res == "false") {
+                    $("#pwd_check").html("<font color='red'> Current password is incorrect</font>");
+                } else {
+                    $("#pwd_check").html("<font color='green'>Updated  successfully</font>");
+                }
+            },
+            error: error => {
+                alert("error", error);
+            }
+        });
+    });
+
     $("input[type=checkbox],input[type=radio],input[type=file]").uniform();
 
     $("select").select2();

@@ -35,6 +35,7 @@
                                     <label class="control-label">Current Password</label>
                                     <div class="controls">
                                         <input type="password" name="current_password" id="current_password" />
+                                        <span id="pwd_check"></span>
                                     </div>
                                 </div>
                                 <div class="control-group">
@@ -50,7 +51,7 @@
                                     </div>
                                 </div>
                                 <div class="form-actions">
-                                    <input type="submit" value="Validate" class="btn btn-success" />
+                                    <input type="submit" id="submit_change_password" value="Validate" class="btn btn-success" />
                                 </div>
                             </form>
                         </div>

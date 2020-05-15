@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use App\User;
 
 class AdminController extends Controller
 {
@@ -40,5 +42,19 @@ class AdminController extends Controller
     public function settings()
     {
         return view('admin.settings');
+    }
+    public function checkPassword(Request $request)
+    {
+        $data = $request->all();
+
+        $currentPassword = $data['currentPassword'];
+        $checkPass  = User::where(['admin' => '1'])->first();
+        if (Hash::check($currentPassword, $checkPass->password)) {
+            echo "true";
+            die;
+        } else {
+            echo "false";
+            die;
+        }
     }
 }
