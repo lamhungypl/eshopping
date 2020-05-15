@@ -55,7 +55,13 @@
                                         >
                                             Edit
                                         </a>
-                                        <a href="#" class="btn btn-danger btn-mini">Delete</a>
+                                        <a
+                                            id="btn_delete"
+                                            href="{{url('/admin/delete-category/'.$category->id )}}"
+                                            class="btn btn-danger btn-mini btn_delete_cat"
+                                        >
+                                            Delete
+                                        </a>
                                     </td>
                                 </tr>
                                 @endforeach

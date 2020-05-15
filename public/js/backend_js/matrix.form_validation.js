@@ -153,4 +153,12 @@ $(document).ready(function () {
             $(element).parents(".control-group").addClass("success");
         }
     });
+    $(".btn_delete_cat").click(function () {
+        console.log("here");
+        if (confirm("Are you sure to delete this category")) {
+            return true;
+        } else {
+            return false;
+        }
+    });
 });
