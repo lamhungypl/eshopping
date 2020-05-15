@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $("#submit_change_password").click(() => {
+    $("#new_password").click(() => {
         const currentPassword = $("#current_password").val();
         // console.log({ currentPassword });
         $.ajax({

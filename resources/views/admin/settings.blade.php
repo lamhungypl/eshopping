@@ -1,5 +1,4 @@
-@extends('layouts.adminLayout.admin_design') 
-@section('content')
+@extends('layouts.adminLayout.admin_design') @section('content')
 
 <div id="content">
     <div id="content-header">
@@ -10,6 +9,26 @@
             <a href="#" class="current">Settings</a>
         </div>
         <h1>Admin settings</h1>
+        <div id="messageBox">
+            @if (Session::has('flash_message_error'))
+                <div class="alert alert-error alert-block">
+                    <button type="button" class="close" data-dismiss="alert">×</button>	
+                        <strong>{{session('flash_message_error')}}</strong>
+                </div>
+            @endif
+            @if (Session::has('flash_message_logout'))
+            <div class="alert alert-success alert-block">
+                <button type="button" class="close" data-dismiss="alert">×</button>	
+                    <strong>{{session('flash_message_logout')}}</strong>
+            </div>
+            @endif
+            @if (Session::has('flash_message_success'))
+            <div class="alert alert-success alert-block">
+                <button type="button" class="close" data-dismiss="alert">×</button>	
+                    <strong>{{session('flash_message_success')}}</strong>
+            </div>
+            @endif
+    
     </div>
     <div class="container-fluid">
         <hr />
@@ -26,32 +45,49 @@
                             <form
                                 class="form-horizontal"
                                 method="post"
-                                action="#"
+                                action="{{ url('/admin/update-password') }}"
                                 name="password_validate"
                                 id="password_validate"
                                 novalidate="novalidate"
-                            >
+                            >{{csrf_field()}}
                                 <div class="control-group">
                                     <label class="control-label">Current Password</label>
                                     <div class="controls">
-                                        <input type="password" name="current_password" id="current_password" />
+                                        <input
+                                            type="password"
+                                            name="current_password"
+                                            id="current_password"
+                                        />
                                         <span id="pwd_check"></span>
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label">New Password</label>
                                     <div class="controls">
-                                        <input type="password" name="new_password" id="new_password" />
+                                        <input
+                                            type="password"
+                                            name="new_password"
+                                            id="new_password"
+                                        />
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label">Confirm password</label>
                                     <div class="controls">
-                                        <input type="password" name="confirm_password" id="confirm_password" />
+                                        <input
+                                            type="password"
+                                            name="confirm_password"
+                                            id="confirm_password"
+                                        />
                                     </div>
                                 </div>
                                 <div class="form-actions">
-                                    <input type="submit" id="submit_change_password" value="Validate" class="btn btn-success" />
+                                    <input
+                                        type="submit"
+                                        id="submit_change_password"
+                                        value="Update"
+                                        class="btn btn-success"
+                                    />
                                 </div>
                             </form>
                         </div>
