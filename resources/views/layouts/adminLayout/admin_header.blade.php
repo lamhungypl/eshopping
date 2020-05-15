@@ -1,6 +1,6 @@
 <!--Header-part-->
 <div id="header">
-    <h1><a href="dashboard.html">Matrix Admin</a></h1>
+    <h1><a href="{{url("/admin/dashboard")}}">Matrix Admin</a></h1>
 </div>
 <!--close-Header-part-->
 
@@ -69,7 +69,7 @@
             </ul>
         </li>
         <li class="">
-            <a title="" href="#"
+        <a title="" href="{{url('/admin/settings')}}"
                 ><i class="icon icon-cog"></i>
                 <span class="text">Settings</span></a
             >
