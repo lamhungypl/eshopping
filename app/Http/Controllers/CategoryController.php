@@ -17,10 +17,13 @@ class CategoryController extends Controller
             $newCategory->name = $data['category_name'];
             $newCategory->description = $data['description'];
             $newCategory->url = $data['url'];
+            $newCategory->parent_id = $data['parent_id'];
             $newCategory->save();
             return redirect('/admin/view-categories')->with('flash_message_success', 'Category added');
         }
-        return view('admin.categories.add_category');
+        $levels = Category::where(['parent_id' => '0'])->get();
+
+        return view('admin.categories.add_category')->with(compact('levels'));
     }
     public function viewCategories()
     {
@@ -29,7 +32,7 @@ class CategoryController extends Controller
     }
     public function editCategory(Request $request, $id = null)
     {
-        # code...
+
         if ($request->isMethod('post')) {
 
             $data = $request->all();
@@ -42,7 +45,8 @@ class CategoryController extends Controller
         }
         $categoryDetails = Category::where(['id' => $id])->first();
 
-        return view('admin.categories.edit_categories')->with(compact('categoryDetails'));
+        $levels = Category::where(['parent_id' => '0'])->get();
+        return view('admin.categories.edit_categories')->with(compact('categoryDetails', 'levels'));
     }
     public function deleteCategory(Request $request, $id = null)
     {

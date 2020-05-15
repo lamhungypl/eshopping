@@ -17,7 +17,6 @@
             <div class="row-fluid">
                 <div class="span12">
                     <div class="widget-box">
-
                         <div class="widget-content nopadding">
                             <form
                                 class="form-horizontal"
@@ -26,17 +25,34 @@
                                 name="add_category"
                                 id="add_category"
                                 novalidate="novalidate"
-                            >{{ csrf_field() }}
+                            >
+                                {{ csrf_field() }}
                                 <div class="control-group">
                                     <label class="control-label">Category name</label>
                                     <div class="controls">
-                                        <input type="text" name="category_name" id="category_name" />
+                                        <input
+                                            type="text"
+                                            name="category_name"
+                                            id="category_name"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    <label class="control-label">Category levels</label>
+                                    <div class="controls">
+                                        <select name="parent_id" style="width: 220px">
+                                            <option value="0">Main Category</option>
+                                            @foreach ($levels as $val)
+                                            <option value="{{$val->id}}">{{$val->name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label">Description</label>
                                     <div class="controls">
-                                        <textarea name="description" id="description" ></textarea>
+                                        <textarea name="description" id="description"></textarea>
                                     </div>
                                 </div>
                                 <div class="control-group">
