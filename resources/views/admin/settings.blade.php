@@ -34,19 +34,19 @@
                                 <div class="control-group">
                                     <label class="control-label">Current Password</label>
                                     <div class="controls">
-                                        <input type="password" name="pwd" id="pwd" />
+                                        <input type="password" name="current_password" id="current_password" />
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label">Password</label>
+                                    <label class="control-label">New Password</label>
                                     <div class="controls">
-                                        <input type="password" name="pwd" id="pwd" />
+                                        <input type="password" name="new_password" id="new_password" />
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label">Confirm password</label>
                                     <div class="controls">
-                                        <input type="password" name="pwd2" id="pwd2" />
+                                        <input type="password" name="confirm_password" id="confirm_password" />
                                     </div>
                                 </div>
                                 <div class="form-actions">
