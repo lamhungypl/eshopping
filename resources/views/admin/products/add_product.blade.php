@@ -9,6 +9,19 @@
             <a href="#" class="current">Add Products</a>
         </div>
         <h1>Products</h1>
+        <div class="message">
+            @if (Session::has('flash_message_error'))
+            <div class="alert alert-error alert-block">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>{{ session("flash_message_error") }}</strong>
+            </div>
+            @endif @if (Session::has('flash_message_success'))
+            <div class="alert alert-success alert-block">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>{{ session("flash_message_success") }}</strong>
+            </div>
+            @endif
+        </div>
     </div>
     <div class="container-fluid">
         <hr />
@@ -28,31 +41,23 @@
                             >
                                 {{ csrf_field() }}
                                 <div class="control-group">
-                                    <label class="control-label">Select</label>
+                                    <label class="control-label">Under Category</label>
                                     <div class="controls">
-                                        <select style="width: 220px">
-                                           <?php echo $categories_dropdown;?>
+                                        <select name="category_id" style="width: 220px;">
+                                            <?php echo $categories_dropdown;?>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label">Product name</label>
                                     <div class="controls">
-                                        <input
-                                            type="text"
-                                            name="product_name"
-                                            id="product_name"
-                                        />
+                                        <input type="text" name="product_name" id="product_name" />
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label">Product code</label>
                                     <div class="controls">
-                                        <input
-                                            type="text"
-                                            name="product_code"
-                                            id="product_code"
-                                        />
+                                        <input type="text" name="product_code" id="product_code" />
                                     </div>
                                 </div>
                                 <div class="control-group">
@@ -66,17 +71,19 @@
                                     </div>
                                 </div>
 
-                                {{-- <div class="control-group">
+                                {{--
+                                <div class="control-group">
                                     <label class="control-label">Product levels</label>
                                     <div class="controls">
-                                        <select name="parent_id" style="width: 220px">
+                                        <select name="parent_id" style="width: 220px;">
                                             <option value="0">Main Product</option>
                                             @foreach ($levels as $val)
                                             <option value="{{$val->id}}">{{$val->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
-                                </div> --}}
+                                </div>
+                                --}}
                                 <div class="control-group">
                                     <label class="control-label">Description</label>
                                     <div class="controls">
@@ -112,4 +119,3 @@
     </div>
 </div>
 @endsection
- 
