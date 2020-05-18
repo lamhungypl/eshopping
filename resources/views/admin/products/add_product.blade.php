@@ -38,6 +38,7 @@
                                 name="add_product"
                                 id="add_product"
                                 novalidate="novalidate"
+                                enctype="multipart/form-data"
                             >
                                 {{ csrf_field() }}
                                 <div class="control-group">
