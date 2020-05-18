@@ -63,6 +63,13 @@
                                     <td>{{$product->price}}</td>
                                     <td class="center">
                                         <a
+                                            href="#myModal{{$product->id}}"
+                                            data-toggle="modal"
+                                            class="btn btn-success btn-mini"
+                                            >View
+                                        </a>
+
+                                        <a
                                             href="{{url('/admin/edit-product/'.$product->id )}}"
                                             class="btn btn-primary btn-mini"
                                         >
@@ -77,6 +84,26 @@
                                         </a>
                                     </td>
                                 </tr>
+                                <div id="myModal{{$product->id}}" class="modal hide">
+                                    <div class="modal-header">
+                                        <button data-dismiss="modal" class="close" type="button">
+                                            ×
+                                        </button>
+                                        <h3>{{$product->product_name}}</h3>
+                                    </div>
+                                    <div class="modal-body">
+                                        <img
+                                            src="{{asset('/images/backend_images/products/medium/'.$product->image)}}"
+                                            width="100px"
+                                        />
+                                        <p>Product ID: {{$product->id}}</p>
+                                        <p>Category ID: {{$product->category_id}}</p>
+                                        <p>Product Code: {{$product->product_code}}</p>
+                                        <p>Product Color: {{$product->product_color}}</p>
+                                        <p>Price: {{$product->price}}</p>
+                                        <p>Description: {{$product->description}}</p>
+                                    </div>
+                                </div>
                                 @endforeach
                             </tbody>
                         </table>
@@ -86,4 +113,5 @@
         </div>
     </div>
 </div>
+
 @endsection
