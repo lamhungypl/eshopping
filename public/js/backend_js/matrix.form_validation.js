@@ -222,11 +222,35 @@ $(document).ready(function () {
         }
     });
     $(".btn_delete_cat").click(function () {
-        if (confirm("Are you sure to delete this category")) {
-            return true;
-        } else {
-            return false;
-        }
+        const id = $(this).attr("rel");
+        const deleteFunction = $(this).attr("rel1");
+        swal({
+            title: "Are you sure?",
+            text: "You will not be able to recover this record again!",
+            icon: "warning",
+            buttons: {
+                cancel: {
+                    text: "Cancel",
+                    value: false,
+                    className: "",
+                    closeModal: true,
+                    visible: true
+                },
+                confirm: {
+                    text: "OK",
+                    value: true,
+                    visible: true,
+                    className: "",
+                    closeModal: true
+                }
+
+                // className: "btn-danger"
+            }
+        }).then(function (confirm) {
+            if (confirm) {
+                window.location.href = "/admin/" + deleteFunction + "/" + id;
+            }
+        });
     });
     // $(".btn_delete_prod").click(function () {
     //     if (confirm("Are you sure to delete this product")) {
@@ -248,9 +272,11 @@ $(document).ready(function () {
                 confirm: "Yes"
                 // className: "btn-danger"
             }
-        }).then(function () {
-            window.location.href = "/admin/" + deleteFunction + "/" + id;
+        }).then(function (confirm) {
+            if (confirm) {
+                console.log({ confirm });
+                window.location.href = "/admin/" + deleteFunction + "/" + id;
+            }
         });
-        console.log({ swal });
     });
 });
