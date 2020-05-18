@@ -222,11 +222,35 @@ $(document).ready(function () {
         }
     });
     $(".btn_delete_cat").click(function () {
-        console.log("here");
         if (confirm("Are you sure to delete this category")) {
             return true;
         } else {
             return false;
         }
+    });
+    // $(".btn_delete_prod").click(function () {
+    //     if (confirm("Are you sure to delete this product")) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // });
+
+    $(".btn_delete_prod").click(function (e) {
+        const id = $(this).attr("rel");
+        const deleteFunction = $(this).attr("rel1");
+        swal({
+            title: "Are you sure?",
+            text: "You will not be able to recover this record again!",
+            icon: "warning",
+            buttons: {
+                cancel: true,
+                confirm: "Yes"
+                // className: "btn-danger"
+            }
+        }).then(function () {
+            window.location.href = "/admin/" + deleteFunction + "/" + id;
+        });
+        console.log({ swal });
     });
 });

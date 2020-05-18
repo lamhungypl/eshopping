@@ -143,4 +143,9 @@ class ProductController extends Controller
         Product::where(['id' => $id])->update(['image' => '']);
         return redirect()->back()->with('flash_message_success', 'removed product ' . $id . " 's image");
     }
+    public function deleteProduct(Request $request, $id = null)
+    {
+        Product::where(['id' => $id])->delete();
+        return redirect()->back()->with('flash_message_success', 'removed product ' . $id);
+    }
 }

@@ -39,7 +39,7 @@
         <script src="{{ asset('js/backend_js/jquery.dataTables.min.js')}}"></script> 
         <script src="{{ asset('js/backend_js/matrix.tables.js')}}"></script> 
         <script src="{{ asset('js/backend_js/matrix.popover.js')}}"></script> 
-
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     </body>
 </html>

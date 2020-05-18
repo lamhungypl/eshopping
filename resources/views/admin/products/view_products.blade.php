@@ -76,9 +76,12 @@
                                             Edit
                                         </a>
                                         <a
-                                            id="btn_delete"
-                                            href="{{url('/admin/delete-product/'.$product->id )}}"
-                                            class="btn btn-danger btn-mini btn_delete_cat"
+                                            {{-- id="btn_delete_prod" --}}
+                                            rel="{{$product->id}}"
+                                            rel1="delete-product"
+                                            href="javascript:"
+                                            {{-- href="{{url('/admin/delete-product/'.$product->id )}}" --}}
+                                            class="btn btn-danger btn-mini btn_delete_prod"
                                         >
                                             Delete
                                         </a>
