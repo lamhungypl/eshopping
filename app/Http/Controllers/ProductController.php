@@ -50,7 +50,7 @@ class ProductController extends Controller
             $product->price = $data['price'];
 
             $product->save();
-            return redirect()->back()->with('flash_message_success', 'product added successfully');
+            return redirect('/admin/view-products')->with('flash_message_success', 'product added successfully');
         }
 
         $categories  = Category::where(['parent_id' => 0])->get();
@@ -64,5 +64,15 @@ class ProductController extends Controller
             }
         }
         return view('admin.products.add_product')->with(compact('categories_dropdown'));
+    }
+    public function viewProducts(Request $request)
+    {
+        $products = Product::get();
+
+        foreach ($products as $key => $value) {
+            $category_name = Category::where(['id' => $value->category_id])->first();
+            $products[$key]->category_name = $category_name->name;
+        }
+        return view('admin.products.view_products')->with(compact('products'));
     }
 }
