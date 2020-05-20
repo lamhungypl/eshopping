@@ -56,9 +56,12 @@
                                             Edit
                                         </a>
                                         <a
-                                            id="btn_delete"
-                                            href="{{url('/admin/delete-category/'.$category->id )}}"
+                                            {{-- id="btn_delete" --}}
+                                            {{-- href="{{url('/admin/delete-category/'.$category->id )}}" --}}
                                             class="btn btn-danger btn-mini btn_delete_cat"
+                                            rel="{{$category->id}}"
+                                            rel1="delete-category"
+                                            href="javascript:"
                                         >
                                             Delete
                                         </a>
