@@ -151,7 +151,8 @@ class ProductController extends Controller
     }
     public function addAttributes(Request $request, $id = null)
     {
-        $productDetails = Product::where(['id' => $id])->first();
+        $productDetails = Product::with('attributes')->where(['id' => $id])->first();
+        // dd($productDetails);
         if ($request->isMethod('post')) {
             $data = $request->all();
             // dd($data);
