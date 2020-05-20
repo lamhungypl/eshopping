@@ -166,12 +166,12 @@
                                             id="btn_delete_prod"
                                             --}}
                                             rel="{{$attribute->id}}"
-                                            rel1="delete-product"
+                                            rel1="delete-attribute"
                                             href="javascript:"
                                             {{--
                                             href="{{url('/admin/delete-product/'.$product->id )}}"
                                             --}}
-                                            class="btn btn-danger btn-mini btn_delete_prod"
+                                            class="btn btn-danger btn-mini btn_delete_prod_att"
                                         >
                                             Delete
                                         </a>
