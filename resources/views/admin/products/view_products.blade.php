@@ -76,6 +76,12 @@
                                             Edit
                                         </a>
                                         <a
+                                            href="{{url('/admin/add-attributes/'.$product->id )}}"
+                                            class="btn btn-success btn-mini"
+                                            >Add
+                                        </a>
+
+                                        <a
                                             {{-- id="btn_delete_prod" --}}
                                             rel="{{$product->id}}"
                                             rel1="delete-product"
