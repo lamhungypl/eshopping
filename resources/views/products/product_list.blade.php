@@ -85,6 +85,9 @@
                                         <a href="#" class="btn btn-default add-to-cart"
                                             ><i class="fa fa-shopping-cart"></i>Add to cart</a
                                         >
+                                        <a href="{{url('/products/'.$product->id)}}" class="btn btn-default add-to-cart"
+                                        ><i class="fa fa-shopping-cart"></i>Go to detail</a
+                                        >
                                     </div>
                                 </div>
                             </div>

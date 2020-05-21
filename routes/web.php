@@ -26,6 +26,11 @@ Route::get('/logout', 'AdminController@logout');
 
 //list  category page
 Route::get('/categories/{url}', 'ProductController@products');
+
+// product detail
+
+Route::get('/products/{id}', 'ProductController@productDetails');
+
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/admin/dashboard', 'AdminController@dashboard');
     Route::get('/admin/settings', 'AdminController@settings');
