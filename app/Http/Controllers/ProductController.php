@@ -6,6 +6,7 @@ use App\Category;
 use App\Product;
 use App\ProductsAttribute;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
 use Intervention\Image\ImageManagerStatic as Image;
 
@@ -84,7 +85,8 @@ class ProductController extends Controller
             $newImage = '';
 
             if ($request->hasFile('image')) {
-
+                $newImage = $data['currentImage'];
+                $currentImage =  $data['currentImage'];
                 $image_tmp = Input::file('image');
                 if ($image_tmp->isValid()) {
                     $extension = $image_tmp->getClientOriginalExtension();
@@ -92,16 +94,32 @@ class ProductController extends Controller
                     $large_image_path = 'images/backend_images/products/large/' . $filename;
                     $medium_image_path = 'images/backend_images/products/medium/' . $filename;
                     $small_image_path = 'images/backend_images/products/small/' . $filename;
-                    #resize
-                    Image::make($image_tmp)->save($large_image_path);
-                    Image::make($image_tmp)->resize(600, 600)->save($medium_image_path);
-                    Image::make($image_tmp)->resize(300, 300)->save($small_image_path);
 
+                    try {
+                        #resize
+                        Image::make($image_tmp)->save($large_image_path);
+                        Image::make($image_tmp)->resize(600, 600)->save($medium_image_path);
+                        Image::make($image_tmp)->resize(300, 300)->save($small_image_path);
+                        $newImage = $filename;
 
-                    $newImage = $filename;
+                        $currentLargePath = public_path('images/backend_images/products/large/' . $currentImage);
+                        $currentMediumPath = public_path('images/backend_images/products/medium/' . $currentImage);
+                        $currentSmallPath = public_path('images/backend_images/products/small/' . $currentImage);
+
+                        if (File::exists($currentLargePath)) {
+                            File::delete($currentLargePath);
+                        }
+                        if (File::exists($currentMediumPath)) {
+                            File::delete($currentMediumPath);
+                        }
+                        if (File::exists($currentSmallPath)) {
+                            File::delete($currentSmallPath);
+                        }
+                    } catch (\Throwable $th) {
+                        //throw $th;
+                        dd($th);
+                    }
                 }
-            } else {
-                $newImage = $data['currentImage'];
             }
 
             Product::where(['id' => $id])->update([
@@ -141,6 +159,23 @@ class ProductController extends Controller
     }
     public function deleteProductImage(Request $request, $id = null)
     {
+
+        $productImage = Product::where(['id' => $id])->first();
+
+        $largePath = public_path('/images/backend_images/products/large/' . $productImage->image);
+        $mediumPath = public_path('/images/backend_images/products/medium/' . $productImage->image);
+        $smallPath = public_path('/images/backend_images/products/small/' . $productImage->image);
+
+        if (File::exists($largePath)) {
+            File::delete($largePath);
+        }
+        if (File::exists($mediumPath)) {
+            File::delete($mediumPath);
+        }
+        if (File::exists($smallPath)) {
+            File::delete($smallPath);
+        }
+
         Product::where(['id' => $id])->update(['image' => '']);
         return redirect()->back()->with('flash_message_success', 'removed product ' . $id . " 's image");
     }
