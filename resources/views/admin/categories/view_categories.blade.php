@@ -39,6 +39,7 @@
                                     <th>Name</th>
                                     <th>Description</th>
                                     <th>URL</th>
+                                    <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -50,6 +51,7 @@
                                     <td>{{$category->name}}</td>
                                     <td>{{$category->description}}</td>
                                     <td>{{$category->url}}</td>
+                                    <td>{{$category->status}}</td>
                                     <td class="center">
                                         <a
                                             href="{{url('/admin/edit-category/'.$category->id )}}"

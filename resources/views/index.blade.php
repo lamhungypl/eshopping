@@ -32,7 +32,7 @@
                                     <ul>
                                         @foreach ($cat->categories as $sub_cat)
                                         <li>
-                                            <a href="{{url('/products/'.$sub_cat->url)}}">{{$sub_cat->name}}</a>
+                                            <a href="{{url('/categories/'.$sub_cat->url)}}">{{$sub_cat->name}}</a>
                                         </li>
                                         @endforeach
                                     </ul>
