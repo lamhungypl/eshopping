@@ -181,8 +181,10 @@ class ProductController extends Controller
 
     public function products(Request $request, $url = null)
     {
+        $categories = Category::with('categories')->where(['parent_id' => 0])->get();
+
         $category = Category::where(['url' => $url])->first();
         $products = Product::where(['category_id' => $category->id])->get();
-        return view('products.product_list')->with(compact('category', 'products'));
+        return view('products.product_list')->with(compact('category', 'products', 'categories'));
     }
 }
