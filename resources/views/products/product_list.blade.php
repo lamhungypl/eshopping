@@ -15,8 +15,8 @@
                     <div class="panel-group category-products" id="accordian">
                         <!--category-productsr-->
                         @foreach ($categories as $cat)
-                        <div class="panel panel-default  ">
-                            <div class="panel-heading  ">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a
                                         data-toggle="collapse"
@@ -30,12 +30,15 @@
                                     </a>
                                 </h4>
                             </div>
-                            <div id="{{$cat->id}}" class="panel-collapse collapse  ">
+                            <div id="{{$cat->id}}" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     <ul>
                                         @foreach ($cat->categories as $sub_cat)
                                         <li>
-                                            <a href="{{url('/products/'.$sub_cat->url)}}">{{$sub_cat->name}}</a>
+                                            <a
+                                                href="{{url('/products/'.$sub_cat->url)}}"
+                                                >{{$sub_cat->name}}</a
+                                            >
                                         </li>
                                         @endforeach
                                     </ul>
@@ -110,7 +113,7 @@
             <div class="col-sm-9 padding-right">
                 <div class="features_items">
                     <!--features_items-->
-                    <h2 class="title text-center">Products</h2>
+                    <h2 class="title text-center">{{$category->name}}</h2>
                     @foreach ($products as $product)
                     <div class="col-sm-4">
                         <div class="product-image-wrapper">
@@ -128,7 +131,10 @@
                                         ><i class="fa fa-shopping-cart"></i>Add to cart</a
                                     >
                                 </div>
-                                <div class="product-overlay">
+                                <div
+                                    class="product-overlay"
+                                    style="background: rgba(0, 0, 0, 0.3);"
+                                >
                                     <div class="overlay-content">
                                         <h2>${{$product->price}}</h2>
                                         <p>{{$product->name}}</p>

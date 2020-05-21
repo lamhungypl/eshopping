@@ -1,3 +1,10 @@
+<?php
+use App\Http\Controllers\Controller;
+
+$mainCategories  = Controller::mainCategories();
+
+?>
+
 <header id="header">
     <!--header-->
     <div class="header_top">
@@ -11,9 +18,7 @@
                                 <a href="#"><i class="fa fa-phone"></i> +2 95 01 88 821</a>
                             </li>
                             <li>
-                                <a href="#"
-                                    ><i class="fa fa-envelope"></i> info@domain.com</a
-                                >
+                                <a href="#"><i class="fa fa-envelope"></i> info@domain.com</a>
                             </li>
                         </ul>
                     </div>
@@ -50,7 +55,9 @@
             <div class="row">
                 <div class="col-sm-4">
                     <div class="logo pull-left">
-                        <a href="index.html"><img src="{{asset('images/frontend_images/home/logo.png')}}" alt="" /></a>
+                        <a href="index.html"
+                            ><img src="{{ asset('images/frontend_images/home/logo.png') }}" alt=""
+                        /></a>
                     </div>
                     <div class="btn-group pull-right">
                         <div class="btn-group">
@@ -99,9 +106,7 @@
                                 >
                             </li>
                             <li>
-                                <a href="cart.html"
-                                    ><i class="fa fa-shopping-cart"></i> Cart</a
-                                >
+                                <a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a>
                             </li>
                             <li>
                                 <a href="login.html"><i class="fa fa-lock"></i> Login</a>
@@ -138,13 +143,12 @@
                             <li class="dropdown">
                                 <a href="#">Shop<i class="fa fa-angle-down"></i></a>
                                 <ul role="menu" class="sub-menu">
-                                    <li><a href="shop.html">Products</a></li>
+                                    @foreach ($mainCategories as $cat)
                                     <li>
-                                        <a href="product-details.html">Product Details</a>
+                                        <a href="{{url('/products/'.$cat->url)}}">{{$cat->name}}</a>
                                     </li>
-                                    <li><a href="checkout.html">Checkout</a></li>
-                                    <li><a href="cart.html">Cart</a></li>
-                                    <li><a href="login.html">Login</a></li>
+
+                                    @endforeach
                                 </ul>
                             </li>
                             <li class="dropdown">
