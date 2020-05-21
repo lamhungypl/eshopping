@@ -178,4 +178,11 @@ class ProductController extends Controller
         ProductsAttribute::where(['id' => $id])->delete();
         return redirect()->back()->with('flash_message_success', 'removed product attribute ' . $id);
     }
+
+    public function products(Request $request, $url = null)
+    {
+        $category = Category::where(['url' => $url])->first();
+        $products = Product::where(['category_id' => $category->id])->get();
+        return view('products.product_list')->with(compact('category', 'products'));
+    }
 }
