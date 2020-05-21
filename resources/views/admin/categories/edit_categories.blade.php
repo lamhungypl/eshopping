@@ -48,14 +48,13 @@
                                         <select name="parent_id" style="width: 220px;">
                                             <option value="0">Main Category</option>
                                             @foreach ($levels as $val)
-                                                <option 
-                                                    value="{{$val->id}}"
-                                                    @if ($val->id == $categoryDetails->parent_id)
-                                                        selected
-                                                    @endif
-                                                >   
-                                                    {{$val->name}}
-                                                </option>
+                                            {{-- {{dd($val)}} --}}
+                                            <option
+                                                value="{{$val->id}}"
+                                                {{ ($val->id == $categoryDetails->parent_id)?'selected':'' }}
+                                            >
+                                                {{$val->name}}
+                                            </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -79,7 +78,17 @@
                                         />
                                     </div>
                                 </div>
-
+                                <div class="control-group">
+                                    <label class="control-label">Enable</label>
+                                    <div class="controls">
+                                        <input
+                                            type="checkbox"
+                                            name="status"
+                                            id="status"
+                                            {{$categoryDetails->status ? "checked" : "" }}
+                                        />
+                                    </div>
+                                </div>
                                 <div class="form-actions">
                                     <input
                                         type="submit"

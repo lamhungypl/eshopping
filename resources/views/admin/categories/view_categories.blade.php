@@ -35,6 +35,7 @@
                             <thead>
                                 <tr>
                                     <th>Category ID</th>
+                                    <th>Parent ID</th>
                                     <th>Name</th>
                                     <th>Description</th>
                                     <th>URL</th>
@@ -45,6 +46,7 @@
                                 @foreach ($categories as $category)
                                 <tr class="gradeX">
                                     <td>{{$category->id}}</td>
+                                    <td>{{$category->parent_id}}</td>
                                     <td>{{$category->name}}</td>
                                     <td>{{$category->description}}</td>
                                     <td>{{$category->url}}</td>

@@ -1,0 +1,33 @@
+.my-dropdown {
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+}
+
+.my-dropdown-content {
+    visibility: hidden;
+    /* hides my-dropdown-content */
+    opacity: 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    transform: translateY(-2em);
+    z-index: -1;
+    transition: all 0.3s ease-in-out 0s, visibility 0s linear 0.3s, z-index 0s linear 0.01s;
+}
+
+.my-dropdown:focus .my-dropdown-content,
+.my-dropdown:focus-within .my-dropdown-content,
+.my-dropdown:hover .my-dropdown-content {
+    visibility: visible;
+    /* shows sub-menu */
+    opacity: 1;
+    z-index: 1;
+    transform: translateY(0%);
+    transition-delay: 0s, 0s, 0.3s;
+}
+
+/* .my-dropdown:hover .my-dropdown-content {
+    display: block;
+} */
