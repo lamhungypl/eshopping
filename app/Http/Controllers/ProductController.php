@@ -181,18 +181,17 @@ class ProductController extends Controller
 
     public function products(Request $request, $url = null)
     {
-        $categories = Category::with('categories')->where(['parent_id' => 0])->get();
+        $categories = Category::with('categories')->where(['parent_id' => 0, 'status' => 1])->get();
 
-        $category = Category::where(['url' => $url])->firstOrFail();
+        $category = Category::where(['url' => $url, 'status' => 1])->firstOrFail();
 
-        $products = Product::where(['category_id' => $category->id])->get();
-
+        // dd($products);
         if ($category->parent_id != 0) {
             // if url is sub category
             $products = Product::where(['category_id' => $category->id])->get();
         } else {
             // if url is main category
-            $subCategories = Category::where(['parent_id' => $category->id])->get()->toArray();
+            $subCategories = Category::where(['parent_id' => $category->id, 'status' => 1])->get()->toArray();
             //all id of parent and child
             $subCatIDs = array_map(function ($cat) {
 

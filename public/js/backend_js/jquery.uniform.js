@@ -661,7 +661,7 @@ Enjoy!
                     }
                 } else if (elem.is(":checkbox")) {
                     //element is a checkbox
-                    doCheckbox(elem);
+                    // doCheckbox(elem);
                 } else if (elem.is(":radio")) {
                     //element is a radio
                     doRadio(elem);
