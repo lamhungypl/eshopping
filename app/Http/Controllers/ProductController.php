@@ -183,7 +183,8 @@ class ProductController extends Controller
     {
         $categories = Category::with('categories')->where(['parent_id' => 0])->get();
 
-        $category = Category::where(['url' => $url])->first();
+        $category = Category::where(['url' => $url])->firstOrFail();
+
         $products = Product::where(['category_id' => $category->id])->get();
 
         if ($category->parent_id != 0) {
