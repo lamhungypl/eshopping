@@ -30,6 +30,7 @@ Route::get('/categories/{url}', 'ProductController@products');
 // product detail
 
 Route::get('/products/{id}', 'ProductController@productDetails');
+Route::get('/get-product-price', 'ProductController@getProductPrice');
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/admin/dashboard', 'AdminController@dashboard');

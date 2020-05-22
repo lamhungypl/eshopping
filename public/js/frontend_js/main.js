@@ -31,3 +31,21 @@ $(document).ready(function () {
         });
     });
 });
+$(document).ready(function () {
+    $("#sizeSelector").change(function () {
+        const sizeId = $(this).val();
+        $.ajax({
+            type: "get",
+            url: "/get-product-price",
+            data: {
+                sizeId
+            },
+            success: function (res) {
+                $("#optionPrice").html(`$${res}`);
+            },
+            error: function (err) {
+                alert("err", err);
+            }
+        });
+    });
+});

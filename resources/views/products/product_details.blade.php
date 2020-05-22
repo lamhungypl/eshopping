@@ -222,10 +222,10 @@
                             <h2>{{$productDetails->product_name}}</h2>
                             <p>Code: {{$productDetails->product_code}}</p>
                             <p>
-                                <select name="size" id="size" style="width: 150px">
+                                <select name="size" id="sizeSelector" style="width: 150px">
                                     <option value="">Select Size</option>
                                     @foreach ($productDetails->attributes as $att)
-                                    <option value="{{$att->size}}">{{$att->size}}</option>
+                                <option value="{{$productDetails->id }}-{{$att->size}}">{{$att->size}}</option>
                                     @endforeach
 
 
@@ -239,7 +239,7 @@
                                 alt=""
                             />
                             <span>
-                                <span>US ${{$productDetails->price}}</span>
+                                <span>US </span><span id="optionPrice">${{$productDetails->price}}</span>
                                 <label>Quantity:</label>
                                 <input type="text" value="1" />
                                 <button type="button" class="btn btn-fefault cart">

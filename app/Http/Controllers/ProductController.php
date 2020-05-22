@@ -246,4 +246,16 @@ class ProductController extends Controller
         // dd($productDetails);
         return view('products.product_details')->with(compact('productDetails', 'categories'));
     }
+    public function getProductPrice(Request $request)
+    {
+        $data = $request->all();
+        $optionArray = explode("-", $data['sizeId']);
+        $productAttribute = ProductsAttribute::where([
+            'product_id' => $optionArray[0],
+            'size' => $optionArray[1],
+
+        ])->first();
+        return $productAttribute->price;
+        // dd($productAttribute);
+    }
 }
