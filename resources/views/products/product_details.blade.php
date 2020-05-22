@@ -221,6 +221,17 @@
                             />
                             <h2>{{$productDetails->product_name}}</h2>
                             <p>Code: {{$productDetails->product_code}}</p>
+                            <p>
+                                <select name="size" id="size" style="width: 150px">
+                                    <option value="">Select Size</option>
+                                    @foreach ($productDetails->attributes as $att)
+                                    <option value="{{$att->size}}">{{$att->size}}</option>
+                                    @endforeach
+
+
+                                </select>
+                            </p>
+
                             <img
                                 src="{{
                                     asset('/images/frontend_images/product-details/rating.png')

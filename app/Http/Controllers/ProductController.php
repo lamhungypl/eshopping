@@ -186,7 +186,7 @@ class ProductController extends Controller
     }
     public function addAttributes(Request $request, $id = null)
     {
-        $productDetails = Product::with('attributes')->where(['id' => $id])->first();
+        $productDetails = Product::with('attributes')->where(['id' => $id])->firstOrFail();
         // dd($productDetails);
         if ($request->isMethod('post')) {
             $data = $request->all();
@@ -242,7 +242,8 @@ class ProductController extends Controller
     public function productDetails(Request $request, $id = null)
     {
         $categories = Category::with('categories')->where(['parent_id' => 0])->get();
-        $productDetails = Product::where(['id' => $id])->first();
+        $productDetails = Product::with('attributes')->where(['id' => $id])->first();
+        // dd($productDetails);
         return view('products.product_details')->with(compact('productDetails', 'categories'));
     }
 }
