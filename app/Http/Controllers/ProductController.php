@@ -31,6 +31,7 @@ class ProductController extends Controller
             $product->product_code = $data['product_code'];
             $product->product_color = $data['product_color'];
             $product->description = $data['description'];
+            $product->care = $data['care'];
             if ($request->hasFile('image')) {
 
                 $image_tmp = Input::file('image');
@@ -82,10 +83,9 @@ class ProductController extends Controller
 
         if ($request->isMethod('post')) {
             $data = $request->all();
-            $newImage = '';
+            $newImage = $data['currentImage'];
 
             if ($request->hasFile('image')) {
-                $newImage = $data['currentImage'];
                 $currentImage =  $data['currentImage'];
                 $image_tmp = Input::file('image');
                 if ($image_tmp->isValid()) {
@@ -128,6 +128,7 @@ class ProductController extends Controller
                 'product_code' => $data['product_code'],
                 'product_color' => $data['product_color'],
                 'description' => $data['description'],
+                'care' => $data['care'],
                 'price' => $data['price'],
                 'image' => $newImage,
             ]);
