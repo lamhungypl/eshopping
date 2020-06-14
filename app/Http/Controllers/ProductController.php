@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Product;
 use App\ProductsAttribute;
+use App\ProductsImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
@@ -221,7 +222,68 @@ class ProductController extends Controller
 
         return view('admin.products.add_attributes')->with(compact('productDetails'));
     }
+    public function addImages(Request $request, $id = null)
+    {
+        $productDetails = Product::with('attributes')->where(['id' => $id])->firstOrFail();
 
+        if ($request->isMethod('post')) {
+            $data = $request->all();
+
+
+            if ($request->hasFile('image')) {
+                $files = $request->file('image');
+
+
+                foreach ($files as $file) {
+                    # code...
+                    $image = new ProductsImage;
+                    $extension = $file->getClientOriginalExtension();
+                    $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . rand(111, 9999) . '.' . $extension;
+
+
+                    $large_image_path = 'images/backend_images/products/large/' . $filename;
+                    $medium_image_path = 'images/backend_images/products/medium/' . $filename;
+                    $small_image_path = 'images/backend_images/products/small/' . $filename;
+
+                    #resize
+                    Image::make($file)->save($large_image_path);
+                    Image::make($file)->resize(600, 600)->save($medium_image_path);
+                    Image::make($file)->resize(300, 300)->save($small_image_path);
+
+
+                    $image->image = $filename;
+                    $image->product_id = $data['product_id'];
+                    $image->save();
+                }
+            }
+
+            return redirect()->back()->with('flash_message_success', 'Product images has been added successfully.');
+        }
+        $productsImages = ProductsImage::where(['product_id' => $id])->get();
+
+        return view('admin.products.add_images')->with(compact('productDetails', 'productsImages'));
+    }
+    public function deleteProductAltImage(Request $request, $id = null)
+    {
+        $productImage = ProductsImage::where(['id' => $id])->first();
+
+        $largePath = public_path('/images/backend_images/products/large/' . $productImage->image);
+        $mediumPath = public_path('/images/backend_images/products/medium/' . $productImage->image);
+        $smallPath = public_path('/images/backend_images/products/small/' . $productImage->image);
+
+        if (File::exists($largePath)) {
+            File::delete($largePath);
+        }
+        if (File::exists($mediumPath)) {
+            File::delete($mediumPath);
+        }
+        if (File::exists($smallPath)) {
+            File::delete($smallPath);
+        }
+
+        ProductsImage::where(['id' => $id])->delete();
+        return redirect()->back()->with('flash_message_success', 'removed product  alternative image');
+    }
     public function deleteAttribute(Request $request, $id = null)
     {
         ProductsAttribute::where(['id' => $id])->delete();
@@ -257,8 +319,14 @@ class ProductController extends Controller
     {
         $categories = Category::with('categories')->where(['parent_id' => 0])->get();
         $productDetails = Product::with('attributes')->where(['id' => $id])->first();
-        // dd($productDetails);
-        return view('products.product_details')->with(compact('productDetails', 'categories'));
+        $productAltImages = ProductsImage::where(['product_id' => $id])->get();
+
+        $mainImage = new ProductsImage(['product_id' => $id, 'image' => $productDetails->image]);
+        $productAltImages->prepend($mainImage);
+        // dd($productAltImages);
+        // dd($productAltImages);
+        // dd($productAltImages);
+        return view('products.product_details')->with(compact('productDetails', 'categories', 'productAltImages'));
     }
     public function getProductPrice(Request $request)
     {

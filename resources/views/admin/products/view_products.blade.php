@@ -80,13 +80,21 @@
                                             class="btn btn-success btn-mini"
                                             >Add
                                         </a>
-
                                         <a
-                                            {{-- id="btn_delete_prod" --}}
+                                            href="{{url('/admin/add-images/'.$product->id )}}"
+                                            class="btn btn-info btn-mini"
+                                            >Add Images
+                                        </a>
+                                        <a
+                                            {{--
+                                            id="btn_delete_prod"
+                                            --}}
                                             rel="{{$product->id}}"
                                             rel1="delete-product"
                                             href="javascript:"
-                                            {{-- href="{{url('/admin/delete-product/'.$product->id )}}" --}}
+                                            {{--
+                                            href="{{url('/admin/delete-product/'.$product->id )}}"
+                                            --}}
                                             class="btn btn-danger btn-mini btn_delete_prod"
                                         >
                                             Delete

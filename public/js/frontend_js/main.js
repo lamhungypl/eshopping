@@ -49,3 +49,9 @@ $(document).ready(function () {
         });
     });
 });
+$(document).ready(function (params) {
+    $(".changeImage").click(function () {
+        const image = $(this).attr("src");
+        $("#mainImage").attr("src", image);
+    });
+});

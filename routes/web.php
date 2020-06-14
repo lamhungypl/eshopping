@@ -50,8 +50,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/admin/view-products', 'ProductController@viewProducts');
     Route::get('/admin/delete-product-image/{id}', 'ProductController@deleteProductImage');
     Route::get('/admin/delete-product/{id}', 'ProductController@deleteProduct');
+    Route::get('/admin/delete-product-alt-image/{id}', 'ProductController@deleteProductAltImage');
 
     // products attribute admin
     Route::match(['get', 'post'], '/admin/add-attributes/{id}',  'ProductController@addAttributes');
+    Route::match(['get', 'post'], '/admin/add-images/{id}',  'ProductController@addImages');
     Route::get('/admin/delete-attribute/{id}', 'ProductController@deleteAttribute');
 });

@@ -13,6 +13,7 @@
                     <div class="col-sm-5">
                         <div class="view-product">
                             <img
+                                id="mainImage"
                                 src="{{ asset('/images/backend_images/products/large/'.$productDetails->image) }}"
                                 alt=""
                             />
@@ -22,92 +23,33 @@
                             <!-- Wrapper for slides -->
                             <div class="carousel-inner">
                                 <div class="item active">
-                                    <a href=""
-                                        ><img
-                                            style="width: 60px;"
+                                    @foreach ($productAltImages as $altImage) {{--
+                                    <a href="">
+                                        --}}
+                                        <img
+                                            class="changeImage"
+                                            width="60px"
                                             src="{{
-                                                asset('/images/backend_images/products/small/'.$productDetails->image)
-                                            }}"
+                                            asset('/images/backend_images/products/small/'.$altImage->image)
+                                        }}"
                                             alt=""
-                                    /></a>
-                                    <a href=""
-                                        ><img
-                                            style="width: 60px;"
-                                            src="{{
-                                                asset('/images/backend_images/products/small/'.$productDetails->image)
-                                            }}"
-                                            alt=""
-                                    /></a>
-                                    <a href=""
-                                        ><img
-                                            style="width: 60px;"
-                                            src="{{
-                                                asset('/images/backend_images/products/small/'.$productDetails->image)
-                                            }}"
-                                            alt=""
-                                    /></a>
-                                </div>
-                                <div class="item">
-                                    <a href=""
-                                        ><img
-                                            style="width: 60px;"
-                                            src="{{
-                                                asset('/images/backend_images/products/small/'.$productDetails->image)
-                                            }}"
-                                            alt=""
-                                    /></a>
-                                    <a href=""
-                                        ><img
-                                            style="width: 60px;"
-                                            src="{{
-                                                asset('/images/backend_images/products/small/'.$productDetails->image)
-                                            }}"
-                                            alt=""
-                                    /></a>
-                                    <a href=""
-                                        ><img
-                                            style="width: 60px;"
-                                            src="{{
-                                                asset('/images/backend_images/products/small/'.$productDetails->image)
-                                            }}"
-                                            alt=""
-                                    /></a>
-                                </div>
-                                <div class="item">
-                                    <a href=""
-                                        ><img
-                                            style="width: 60px;"
-                                            src="{{
-                                                asset('/images/backend_images/products/small/'.$productDetails->image)
-                                            }}"
-                                            alt=""
-                                    /></a>
-                                    <a href=""
-                                        ><img
-                                            style="width: 60px;"
-                                            src="{{
-                                                asset('/images/backend_images/products/small/'.$productDetails->image)
-                                            }}"
-                                            alt=""
-                                    /></a>
-                                    <a href=""
-                                        ><img
-                                            style="width: 60px;"
-                                            src="{{
-                                                asset('/images/backend_images/products/small/'.$productDetails->image)
-                                            }}"
-                                            alt=""
-                                    /></a>
+                                            style="cursor:pointer;"
+                                        />
+                                        {{--
+                                    </a>
+                                    --}} @endforeach
                                 </div>
                             </div>
 
                             <!-- Controls -->
+                            {{--
                             <a class="left item-control" href="#similar-product" data-slide="prev">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                             <a class="right item-control" href="#similar-product" data-slide="next">
                                 <i class="fa fa-angle-right"></i>
                             </a>
+                            --}}
                         </div>
                     </div>
                     <div class="col-sm-7">
