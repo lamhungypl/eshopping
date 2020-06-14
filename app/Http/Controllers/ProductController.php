@@ -222,6 +222,24 @@ class ProductController extends Controller
 
         return view('admin.products.add_attributes')->with(compact('productDetails'));
     }
+    public function editAttributes(Request $request, $id = null)
+    {
+        // $productDetails = Product::with('attributes')->where(['id' => $id])->firstOrFail();
+        // dd($productDetails);
+        if ($request->isMethod('post')) {
+            $data = $request->all();
+            dd($data);
+            foreach ($data['idAttr'] as $key => $attr) {
+                ProductsAttribute::where([
+                    'id', $data['idAttr'][$key]
+                ])->update([
+                    'price' => $data['price'][$key],
+                    'stock' => $data['stock'][$key]
+                ]);
+            }
+            return redirect()->back()->with('flash_message_success', 'updated attributes');
+        }
+    }
     public function addImages(Request $request, $id = null)
     {
         $productDetails = Product::with('attributes')->where(['id' => $id])->firstOrFail();
