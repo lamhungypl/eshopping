@@ -41,7 +41,9 @@
                                 action="{{ url('/admin/add-attributes/'.$productDetails->id) }}"
                                 name="add_attributes"
                                 id="add_attributes"
-                                {{-- novalidate="novalidate" --}}
+                                {{--
+                                novalidate="novalidate"
+                                --}}
                                 enctype="multipart/form-data"
                             >
                                 {{ csrf_field() }}
@@ -140,46 +142,67 @@
                         <h5>View Attributes</h5>
                     </div>
                     <div class="widget-content nopadding">
-                        <table class="table table-bordered data-table">
-                            <thead>
-                                <tr>
-                                    <th>Attribute ID</th>
-                                    <th>SKU</th>
-                                    <th>Size</th>
-                                    <th>Price</th>
-                                    <th>Stock</th>
+                        <form
+                            action="{{ url('/admin/edit-attributes/'.$productDetails->id) }}"
+                            method="post"
+                        >
+                            {{ csrf_field() }}
 
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($productDetails['attributes'] as $attribute)
-                                <tr class="gradeX">
-                                    <td>{{$attribute->id}}</td>
-                                    <td>{{$attribute->sku}}</td>
-                                    <td>{{$attribute->size}}</td>
-                                    <td>{{$attribute->price}}</td>
-                                    <td>{{$attribute->stock}}</td>
-                                    <td class="center">
-                                        <a
-                                            {{--
-                                            id="btn_delete_prod"
-                                            --}}
-                                            rel="{{$attribute->id}}"
-                                            rel1="delete-attribute"
-                                            href="javascript:"
-                                            {{--
-                                            href="{{url('/admin/delete-product/'.$product->id )}}"
-                                            --}}
-                                            class="btn btn-danger btn-mini btn_delete_prod_att"
-                                        >
-                                            Delete
-                                        </a>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                            <table class="table table-bordered data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Attribute ID</th>
+                                        <th>SKU</th>
+                                        <th>Size</th>
+                                        <th>Price</th>
+                                        <th>Stock</th>
+
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($productDetails['attributes'] as $attribute)
+                                    <tr class="gradeX">
+                                        <td>
+                                            {{$attribute->id}}
+                                            <input type="hidden" name="idAttr[]" value=" {{$attribute->id}}">
+                                        </td>
+                                        <td>{{$attribute->size}}</td>
+                                        <td>{{$attribute->size}}</td>
+                                        <td>
+                                            <input
+                                                type="text"
+                                                name="price[]"
+                                                value="{{$attribute->price}}"
+                                            />
+                                        </td>
+                                        <td>
+                                            <input
+                                                type="text"
+                                                name="stock[]"
+                                                value="{{$attribute->stock}}"
+                                            />
+                                        </td>
+                                        <td class="center">
+                                            <input
+                                                type="submit"
+                                                value="Update"
+                                                class="btn btn-primary btn-mini"
+                                            />
+                                            <a
+                                                rel="{{$attribute->id}}"
+                                                rel1="delete-attribute"
+                                                href="javascript:"
+                                                class="btn btn-danger btn-mini btn_delete_prod_att"
+                                            >
+                                                Delete
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </form>
                     </div>
                 </div>
             </div>
