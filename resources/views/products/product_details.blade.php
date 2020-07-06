@@ -33,7 +33,7 @@
                                             asset('/images/backend_images/products/small/'.$altImage->image)
                                         }}"
                                             alt=""
-                                            style="cursor:pointer;"
+                                            style="cursor: pointer;"
                                         />
                                         {{--
                                     </a>
@@ -85,12 +85,17 @@
                                 ><span id="optionPrice">${{$productDetails->price}}</span>
                                 <label>Quantity:</label>
                                 <input type="text" value="1" />
-                                <button type="button" class="btn btn-fefault cart">
+                                @if ($total_stock > 0)
+                                <button type="button" class="btn btn-fefault cart" id="cartButton">
                                     <i class="fa fa-shopping-cart"></i>
                                     Add to cart
                                 </button>
+                                @endif
                             </span>
-                            <p><b>Availability:</b> In Stock</p>
+                            <p>
+                                <b>Availability:</b>
+                                @if ($total_stock > 0) In Stock @else Out of stock @endif
+                            </p>
                             <p><b>Condition:</b> New</p>
                             <p><b>Brand:</b> E-SHOPPER</p>
                             <a href=""

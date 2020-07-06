@@ -341,10 +341,12 @@ class ProductController extends Controller
 
         $mainImage = new ProductsImage(['product_id' => $id, 'image' => $productDetails->image]);
         $productAltImages->prepend($mainImage);
+
+        $total_stock = ProductsAttribute::where('product_id', $id)->sum('stock');
+        // dd($total_stock);
         // dd($productAltImages);
         // dd($productAltImages);
-        // dd($productAltImages);
-        return view('products.product_details')->with(compact('productDetails', 'categories', 'productAltImages'));
+        return view('products.product_details')->with(compact('productDetails', 'categories', 'productAltImages', 'total_stock'));
     }
     public function getProductPrice(Request $request)
     {
