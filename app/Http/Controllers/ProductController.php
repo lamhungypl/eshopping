@@ -339,6 +339,8 @@ class ProductController extends Controller
         $productDetails = Product::with('attributes')->where(['id' => $id])->first();
         $productAltImages = ProductsImage::where(['product_id' => $id])->get();
 
+        $relatedProducts = Product::where('id', '!=', $id)->where('category_id', $productDetails->category_id)->get();
+        $relatedProductsChunks3 = $relatedProducts->chunk(3)->toArray();
         $mainImage = new ProductsImage(['product_id' => $id, 'image' => $productDetails->image]);
         $productAltImages->prepend($mainImage);
 
@@ -346,7 +348,7 @@ class ProductController extends Controller
         // dd($total_stock);
         // dd($productAltImages);
         // dd($productAltImages);
-        return view('products.product_details')->with(compact('productDetails', 'categories', 'productAltImages', 'total_stock'));
+        return view('products.product_details')->with(compact('relatedProductsChunks3', 'productDetails', 'categories', 'productAltImages', 'total_stock'));
     }
     public function getProductPrice(Request $request)
     {
