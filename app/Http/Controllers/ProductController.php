@@ -52,7 +52,7 @@ class ProductController extends Controller
                 }
             }
             $product->price = $data['price'];
-
+            $product->status = empty($data['status']) ? 0 : 1;
             $product->save();
             return redirect('/admin/view-products')->with('flash_message_success', 'product added successfully');
         }
@@ -84,6 +84,7 @@ class ProductController extends Controller
 
         if ($request->isMethod('post')) {
             $data = $request->all();
+            $status = empty($data['status']) ? 0 : 1;
             $newImage = $data['currentImage'];
 
             if ($request->hasFile('image')) {
@@ -132,6 +133,7 @@ class ProductController extends Controller
                 'care' => $data['care'],
                 'price' => $data['price'],
                 'image' => $newImage,
+                'status' => $status
             ]);
             return redirect('/admin/view-products')->with('flash_message_success', 'Product' . $id . ' updated');
         }
@@ -317,7 +319,7 @@ class ProductController extends Controller
         // dd($products);
         if ($category->parent_id != 0) {
             // if url is sub category
-            $products = Product::where(['category_id' => $category->id])->get();
+            $products = Product::where(['category_id' => $category->id, 'status', 1])->get();
         } else {
             // if url is main category
             $subCategories = Category::where(['parent_id' => $category->id, 'status' => 1])->get()->toArray();
@@ -329,14 +331,14 @@ class ProductController extends Controller
 
             $catIDs = array_merge(array($category->id), $subCatIDs);
 
-            $products = Product::whereIn('category_id', $catIDs)->get();
+            $products = Product::whereIn('category_id', $catIDs)->where('status', 1)->get();
         }
         return view('products.product_list')->with(compact('category', 'products', 'categories'));
     }
     public function productDetails(Request $request, $id = null)
     {
         $categories = Category::with('categories')->where(['parent_id' => 0])->get();
-        $productDetails = Product::with('attributes')->where(['id' => $id])->first();
+        $productDetails = Product::with('attributes')->where(['id' => $id, 'status', 1])->firstOrFail();
         $productAltImages = ProductsImage::where(['product_id' => $id])->get();
 
         $relatedProducts = Product::where('id', '!=', $id)->where('category_id', $productDetails->category_id)->get();

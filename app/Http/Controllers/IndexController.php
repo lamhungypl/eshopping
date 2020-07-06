@@ -17,7 +17,7 @@ class IndexController extends Controller
         // $products = Product::orderBy('id', 'DESC')->get();
 
         //random order
-        $products = Product::inRandomOrder()->get();
+        $products = Product::inRandomOrder()->where('status', 1)->get();
         // dd($products);
 
         //-----------------------------------

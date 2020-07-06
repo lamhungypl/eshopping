@@ -145,7 +145,17 @@
                                         />
                                     </div>
                                 </div>
-
+                                <div class="control-group">
+                                    <label class="control-label">Enable</label>
+                                    <div class="controls">
+                                        <input
+                                            type="checkbox"
+                                            name="status"
+                                            id="status"
+                                            {{$productDetails->status ? "checked" : "" }}
+                                        />
+                                    </div>
+                                </div>
                                 <div class="form-actions">
                                     <input
                                         type="submit"
