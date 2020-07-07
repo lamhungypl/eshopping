@@ -32,6 +32,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <?php $initTotalAmount = 0;?>
                     @foreach ($cartList as $cartItem)
                     <tr>
                         <input
@@ -80,8 +81,9 @@
                         </td>
                         <td class="cart_total">
                             <p class="cart_total_price">
-                                {{$cartItem->price * $cartItem->quantity}}$
+                                {{$cartItem->price * $cartItem->quantity}}
                             </p>
+                            <span>$</span>
                         </td>
                         <td class="cart_delete">
                             <a
@@ -91,8 +93,8 @@
                             ></a>
                         </td>
                     </tr>
-
-                    @endforeach
+                    <?php $initTotalAmount = $initTotalAmount + $cartItem->price *
+                    $cartItem->quantity;?> @endforeach
                 </tbody>
             </table>
         </div>
@@ -165,10 +167,9 @@
             <div class="col-sm-6">
                 <div class="total_area">
                     <ul>
-                        <li>Cart Sub Total <span>$59</span></li>
-                        <li>Eco Tax <span>$2</span></li>
-                        <li>Shipping Cost <span>Free</span></li>
-                        <li>Total <span>$61</span></li>
+                        <li>
+                            Total <span id="totalAmount">$<?php echo $initTotalAmount; ?></span>
+                        </li>
                     </ul>
                     <a class="btn btn-default update" href="">Update</a>
                     <a class="btn btn-default check_out" href="">Check Out</a>
@@ -189,11 +190,21 @@
         const quantityInput = document.querySelectorAll(".cart_quantity_input");
         const delButton = document.querySelectorAll(".cart_quantity_down");
         const totals = document.querySelectorAll(".cart_total_price");
+        const totalAmountNode = document.getElementById("totalAmount");
 
         const arrayPrice = Array.from(prices);
         const arrayQuantity = Array.from(quantityInput);
         const arrayTotal = Array.from(totals);
         const lineItems = Array.from(document.querySelectorAll(".itemId"));
+
+        const totalAmount = arrTotal => {
+            return arrTotal
+                .map(node => node.innerHTML)
+                .reduce((total, current) => {
+                    return total + parseInt(current);
+                }, 0);
+        };
+
         Array.from(addButton).forEach((button, index) => {
             button.addEventListener("click", () => {
                 // console.log("hi"+arrayQuantity[index].value,lineItems[index].value);
@@ -206,8 +217,10 @@
                     })
                     .then(function (response) {
                         arrayQuantity[index].value = newQuantity;
-                        arrayTotal[index].innerHTML =
-                            parseInt(newQuantity * parseInt(arrayPrice[index].innerHTML)) + "$";
+                        arrayTotal[index].innerHTML = parseInt(
+                            newQuantity * parseInt(arrayPrice[index].innerHTML)
+                        );
+                        totalAmountNode.innerHTML = "$" + totalAmount(arrayTotal);
                     })
                     .catch(function (error) {
                         // console.log(error);
@@ -230,8 +243,10 @@
                     })
                     .then(function (response) {
                         arrayQuantity[index].value = newQuantity;
-                        arrayTotal[index].innerHTML =
-                            parseInt(newQuantity * parseInt(arrayPrice[index].innerHTML)) + "$";
+                        arrayTotal[index].innerHTML = parseInt(
+                            newQuantity * parseInt(arrayPrice[index].innerHTML)
+                        );
+                        totalAmountNode.innerHTML = "$" + totalAmount(arrayTotal);
                     })
                     .catch(function (error) {
                         // console.log(error);
