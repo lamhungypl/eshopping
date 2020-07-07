@@ -42,6 +42,7 @@ $(document).ready(function () {
             },
             success: function (res) {
                 $("#optionPrice").html(`$${res}`);
+                $("#price").val(res);
             },
             error: function (err) {
                 alert("err", err);

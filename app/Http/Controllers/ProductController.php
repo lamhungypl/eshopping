@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Cart;
 use App\Category;
 use App\Product;
 use App\ProductsAttribute;
@@ -338,7 +339,7 @@ class ProductController extends Controller
     public function productDetails(Request $request, $id = null)
     {
         $categories = Category::with('categories')->where(['parent_id' => 0])->get();
-        $productDetails = Product::with('attributes')->where(['id' => $id, 'status', 1])->firstOrFail();
+        $productDetails = Product::with('attributes')->where(['id' => $id, 'status' => 1])->firstOrFail();
         $productAltImages = ProductsImage::where(['product_id' => $id])->get();
 
         $relatedProducts = Product::where('id', '!=', $id)->where('category_id', $productDetails->category_id)->get();
@@ -363,5 +364,29 @@ class ProductController extends Controller
         ])->first();
         return $productAttribute->price;
         // dd($productAttribute);
+    }
+    public function addToCart(Request $request)
+    {
+        if ($request->isMethod('post')) {
+            $data = $request->all();
+
+            $user_email = empty($data['user_email']) ? '' : $data['user_email'];
+            $session_id = empty($data['session_id']) ? '' : $data['session_id'];
+
+
+            $newCart = new Cart();
+
+            $newCart->product_id = $data['product_id'];
+            $newCart->product_name = $data['product_name'];
+            $newCart->product_code = $data['product_code'];
+            $newCart->product_color = $data['product_color'];
+            $newCart->size = $data['size'];
+            $newCart->price = $data['price'];
+            $newCart->quantity = $data['quantity'];
+            $newCart->user_email = $user_email;
+            $newCart->session_id = $session_id;
+            $newCart->save();
+        }
+        return redirect()->back();
     }
 }

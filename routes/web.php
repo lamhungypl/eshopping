@@ -32,6 +32,11 @@ Route::get('/categories/{url}', 'ProductController@products');
 Route::get('/products/{id}', 'ProductController@productDetails');
 Route::get('/get-product-price', 'ProductController@getProductPrice');
 
+//cart
+
+Route::match(['get', 'post'], '/add-to-cart', 'ProductController@addToCart');
+
+
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/admin/dashboard', 'AdminController@dashboard');
     Route::get('/admin/settings', 'AdminController@settings');

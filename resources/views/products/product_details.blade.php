@@ -53,8 +53,15 @@
                         </div>
                     </div>
                     <div class="col-sm-7">
+                    <form name="addToCartForm" id="addToCartForm" action="{{url('add-to-cart')}}" method="post"> {{ csrf_field() }}
                         <div class="product-information">
                             <!--/product-information-->
+                            <input type="hidden" name="product_id" value="{{$productDetails->id}}">
+                            <input type="hidden" name="product_name" value="{{$productDetails->product_name}}">
+                            <input type="hidden" name="product_code" value="{{$productDetails->product_code}}">
+                            <input type="hidden" name="product_color" value="{{$productDetails->product_color}}">
+                            <input type="hidden" name="price" id="price" value="{{$productDetails->price}}">
+
                             <img
                                 src="{{ asset('/images/frontend_images/product-details/new.jpg') }}"
                                 class="newarrival"
@@ -63,7 +70,7 @@
                             <h2>{{$productDetails->product_name}}</h2>
                             <p>Code: {{$productDetails->product_code}}</p>
                             <p>
-                                <select name="size" id="sizeSelector" style="width: 150px;">
+                                <select name="size" id="sizeSelector" style="width: 150px;" name="size">
                                     <option value="">Select Size</option>
                                     @foreach ($productDetails->attributes as $att)
                                     <option
@@ -84,9 +91,9 @@
                                 <span>US </span
                                 ><span id="optionPrice">${{$productDetails->price}}</span>
                                 <label>Quantity:</label>
-                                <input type="text" value="1" />
+                                <input type="text" value="1" name="quantity"/>
                                 @if ($total_stock > 0)
-                                <button type="button" class="btn btn-fefault cart" id="cartButton">
+                                <button type="submit" class="btn btn-fefault cart" id="cartButton">
                                     <i class="fa fa-shopping-cart"></i>
                                     Add to cart
                                 </button>
@@ -107,6 +114,9 @@
                                     alt=""
                             /></a>
                         </div>
+                    
+                    </form>
+                        
                         <!--/product-information-->
                     </div>
                 </div>
