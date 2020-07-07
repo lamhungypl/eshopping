@@ -37,7 +37,9 @@
                         <td class="cart_product">
                             <a href=""
                                 ><img
-                                    src="{{url('/images/backend_images/products/small'.$cartItem->image)}}"
+                                width="100px"
+                                height="100px"
+                                    src="{{url('images/backend_images/products/small/'.$cartItem->image)}}"
                                     alt=""
                             /></a>
                         </td>
@@ -70,7 +72,7 @@
                             <p class="cart_total_price">${{$cartItem->price * $cartItem->quantity}}</p>
                         </td>
                         <td class="cart_delete">
-                            <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
+                            <a class="cart_quantity_delete" href="{{url('/delete-cart-item/'.$cartItem->id)}}"><i class="fa fa-times"></i></a>
                         </td>
                     </tr>
 
