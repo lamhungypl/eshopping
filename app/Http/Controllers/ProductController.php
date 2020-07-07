@@ -377,12 +377,15 @@ class ProductController extends Controller
                 $session_id = str_random(40);
                 Session::put('session_id', $session_id);
             }
+
+            $size =  explode('-', $data['size'])[1];
+
             $currentCart = Cart::where([
                 'product_id' => $data['product_id'],
                 'product_name' => $data['product_name'],
                 'product_code' => $data['product_code'],
                 'product_color' => $data['product_color'],
-                'size' => $data['size']
+                'size' => $size
             ])->first();
             // dd($currentCart);
             if ($currentCart) {
@@ -398,7 +401,7 @@ class ProductController extends Controller
             $newCart->product_name = $data['product_name'];
             $newCart->product_code = $data['product_code'];
             $newCart->product_color = $data['product_color'];
-            $newCart->size = $data['size'];
+            $newCart->size = $size;
             $newCart->price = $data['price'];
             $newCart->quantity = $data['quantity'];
             $newCart->user_email = $user_email;

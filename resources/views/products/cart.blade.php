@@ -41,7 +41,7 @@
                             value="{{$cartItem->id}}"
                         />
                         <td class="cart_product">
-                            <a href=""
+                            <a href="{{url('/products/'.$cartItem->product_id)}}"
                                 ><img
                                     width="100px"
                                     height="100px"
@@ -52,7 +52,7 @@
                         <td class="cart_description">
                             <h4>
                                 <a
-                                    href="{{url('/products/'.$cartItem->id)}}"
+                                    href="{{url('/products/'.$cartItem->product_id)}}"
                                     >{{$cartItem->product_name}}</a
                                 >
                             </h4>
