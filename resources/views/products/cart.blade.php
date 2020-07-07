@@ -34,29 +34,39 @@
                 <tbody>
                     @foreach ($cartList as $cartItem)
                     <tr>
+                        <input
+                            type="hidden"
+                            name="itemId"
+                            class="itemId"
+                            value="{{$cartItem->id}}"
+                        />
                         <td class="cart_product">
                             <a href=""
                                 ><img
-                                width="100px"
-                                height="100px"
+                                    width="100px"
+                                    height="100px"
                                     src="{{url('images/backend_images/products/small/'.$cartItem->image)}}"
                                     alt=""
                             /></a>
                         </td>
                         <td class="cart_description">
                             <h4>
-                                <a href="">{{$cartItem->product_name}}</a>
+                                <a
+                                    href="{{url('/products/'.$cartItem->id)}}"
+                                    >{{$cartItem->product_name}}</a
+                                >
                             </h4>
                             <p>
                                 <span> {{$cartItem->product_code}} | {{$cartItem->size}} </span>
                             </p>
                         </td>
                         <td class="cart_price">
-                            <p>${{$cartItem->price}}</p>
+                            <p class="cart_price_value">{{$cartItem->price}}</p>
+                            $
                         </td>
                         <td class="cart_quantity">
                             <div class="cart_quantity_button">
-                                <a class="cart_quantity_up" href="#"> + </a>
+                                <span class="cart_quantity_up"> + </span>
                                 <input
                                     class="cart_quantity_input"
                                     type="text"
@@ -65,14 +75,20 @@
                                     autocomplete="off"
                                     size="2"
                                 />
-                                <a class="cart_quantity_down" href="#"> - </a>
+                                <span class="cart_quantity_down"> - </span>
                             </div>
                         </td>
                         <td class="cart_total">
-                            <p class="cart_total_price">${{$cartItem->price * $cartItem->quantity}}</p>
+                            <p class="cart_total_price">
+                                {{$cartItem->price * $cartItem->quantity}}$
+                            </p>
                         </td>
                         <td class="cart_delete">
-                            <a class="cart_quantity_delete" href="{{url('/delete-cart-item/'.$cartItem->id)}}"><i class="fa fa-times"></i></a>
+                            <a
+                                class="cart_quantity_delete"
+                                href="{{url('/delete-cart-item/'.$cartItem->id)}}"
+                                ><i class="fa fa-times"></i
+                            ></a>
                         </td>
                     </tr>
 
@@ -163,4 +179,66 @@
 </section>
 <!--/#do_action-->
 
+@endsection @section('extraJS')
+<script src="{{ url('js/app.js') }}"></script>
+<script>
+    // ahab! something weird!!
+    (function () {
+        const addButton = document.querySelectorAll(".cart_quantity_up");
+        const prices = document.querySelectorAll(".cart_price_value");
+        const quantityInput = document.querySelectorAll(".cart_quantity_input");
+        const delButton = document.querySelectorAll(".cart_quantity_down");
+        const totals = document.querySelectorAll(".cart_total_price");
+
+        const arrayPrice = Array.from(prices);
+        const arrayQuantity = Array.from(quantityInput);
+        const arrayTotal = Array.from(totals);
+        const lineItems = Array.from(document.querySelectorAll(".itemId"));
+        Array.from(addButton).forEach((button, index) => {
+            button.addEventListener("click", () => {
+                // console.log("hi"+arrayQuantity[index].value,lineItems[index].value);
+                const currentQuantity = arrayQuantity[index].value;
+                const newQuantity = parseInt(currentQuantity) + 1;
+                const id = lineItems[index].value;
+                axios
+                    .post(`/update-cart-item/${id}`, {
+                        quantity: newQuantity
+                    })
+                    .then(function (response) {
+                        arrayQuantity[index].value = newQuantity;
+                        arrayTotal[index].innerHTML =
+                            parseInt(newQuantity * parseInt(arrayPrice[index].innerHTML)) + "$";
+                    })
+                    .catch(function (error) {
+                        // console.log(error);
+                        alert(error);
+                    });
+            });
+        });
+        Array.from(delButton).forEach((button, index) => {
+            button.addEventListener("click", () => {
+                // console.log("hi"+arrayQuantity[index].value,lineItems[index].value);
+                const currentQuantity = arrayQuantity[index].value;
+                const newQuantity = parseInt(currentQuantity) - 1;
+                if (newQuantity === 0) {
+                    return;
+                }
+                const id = lineItems[index].value;
+                axios
+                    .post(`/update-cart-item/${id}`, {
+                        quantity: newQuantity
+                    })
+                    .then(function (response) {
+                        arrayQuantity[index].value = newQuantity;
+                        arrayTotal[index].innerHTML =
+                            parseInt(newQuantity * parseInt(arrayPrice[index].innerHTML)) + "$";
+                    })
+                    .catch(function (error) {
+                        // console.log(error);
+                        alert(error);
+                    });
+            });
+        });
+    })();
+</script>
 @endsection

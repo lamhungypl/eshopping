@@ -370,16 +370,27 @@ class ProductController extends Controller
     {
         if ($request->isMethod('post')) {
             $data = $request->all();
-
-
-
+            // dd($data);
             $user_email = empty($data['user_email']) ? '' : $data['user_email'];
             $session_id = Session::get('session_id');
             if (empty($session_id)) {
                 $session_id = str_random(40);
                 Session::put('session_id', $session_id);
             }
-
+            $currentCart = Cart::where([
+                'product_id' => $data['product_id'],
+                'product_name' => $data['product_name'],
+                'product_code' => $data['product_code'],
+                'product_color' => $data['product_color'],
+                'size' => $data['size']
+            ])->first();
+            // dd($currentCart);
+            if ($currentCart) {
+                $newQuantity = $currentCart->quantity +  $data['quantity'];
+                // dd($newQuantity);
+                $currentCart->update(['quantity' => $newQuantity]);
+                return redirect('cart')->with('flash_message_success', 'product added to cart');
+            }
 
             $newCart = new Cart();
 
@@ -415,5 +426,14 @@ class ProductController extends Controller
         Cart::where(['id' => $id])->delete();
 
         return redirect()->back()->with('flash_message_success', 'removed product');
+    }
+    public function updateCartItem(Request $request, $id = null)
+    {
+        # code...
+        if ($request->isMethod('post')) {
+            $data = $request->all();
+            Cart::where(['id' => $id])->update(['quantity' => $data['quantity']]);
+            return response()->json(['success' => true]);
+        }
     }
 }
