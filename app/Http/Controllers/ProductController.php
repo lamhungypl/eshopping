@@ -10,6 +10,7 @@ use App\ProductsImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Session;
 use Intervention\Image\ImageManagerStatic as Image;
 
 class ProductController extends Controller
@@ -370,8 +371,14 @@ class ProductController extends Controller
         if ($request->isMethod('post')) {
             $data = $request->all();
 
+
+
             $user_email = empty($data['user_email']) ? '' : $data['user_email'];
-            $session_id = empty($data['session_id']) ? '' : $data['session_id'];
+            $session_id = Session::get('session_id');
+            if (empty($session_id)) {
+                $session_id = str_random(40);
+                Session::put('session_id', $session_id);
+            }
 
 
             $newCart = new Cart();
@@ -387,6 +394,14 @@ class ProductController extends Controller
             $newCart->session_id = $session_id;
             $newCart->save();
         }
-        return redirect()->back();
+        return redirect('cart')->with('flash_message_success', 'product added to cart');
+    }
+    public function getCart(Request $request)
+    {
+        # code...
+        $session_id = Session::get('session_id');
+        $cartList = Cart::where('session_id', $session_id)->get();
+        // dd($cartList);
+        return view('products.cart')->with(compact('cartList'));
     }
 }
