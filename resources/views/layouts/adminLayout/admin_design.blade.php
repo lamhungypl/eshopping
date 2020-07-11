@@ -21,12 +21,15 @@
             type="text/css"
         />
         <link rel="stylesheet" href="{{ asset('css/backend_css/select2.css') }}" />
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
     </head>
     <body>
         @include('layouts.adminLayout.admin_header') @include('layouts.adminLayout.admin_sidebar')
         @yield('content') @include('layouts.adminLayout.admin_footer');
         <script src="{{ asset('js/backend_js/jquery.min.js') }}"></script>
+        {{--
         <script src="{{ asset('js/backend_js/jquery.ui.custom.js') }}"></script>
+        --}}
         <script src="{{ asset('js/backend_js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('js/backend_js/jquery.uniform.js') }}"></script>
         <script src="{{ asset('js/backend_js/select2.min.js') }}"></script>
@@ -37,5 +40,11 @@
         <script src="{{ asset('js/backend_js/matrix.tables.js') }}"></script>
         <script src="{{ asset('js/backend_js/matrix.popover.js') }}"></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script>
+            $(function () {
+                $("#expired_date").datepicker({ minDate: 0, dateFormat: "yy-mm-dd" });
+            });
+        </script>
     </body>
 </html>

@@ -37,21 +37,32 @@
                                 action="{{ url('/admin/add-coupon') }}"
                                 name="add_coupon"
                                 id="add_coupon"
-                                novalidate="novalidate"
-                                enctype="multipart/form-data"
                             >
                                 {{ csrf_field() }}
-                               
+
                                 <div class="control-group">
                                     <label class="control-label">Coupon code</label>
                                     <div class="controls">
-                                        <input type="text" name="coupon_code" id="coupon_code" />
+                                        <input
+                                            type="text"
+                                            name="coupon_code"
+                                            id="coupon_code"
+                                            minlength="5"
+                                            maxlength="15"
+                                            required
+                                        />
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label">Amount</label>
                                     <div class="controls">
-                                        <input type="text" name="amount" id="amount" />
+                                        <input
+                                            type="number"
+                                            min="0"
+                                            name="amount"
+                                            id="amount"
+                                            required
+                                        />
                                     </div>
                                 </div>
                                 <div class="control-group">
@@ -70,13 +81,20 @@
                                             type="text"
                                             name="expired_date"
                                             id="expired_date"
+                                            autocomplete="off"
+                                            required
                                         />
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label">Enable</label>
                                     <div class="controls">
-                                        <input type="checkbox" name="status" id="status" value="1"/>
+                                        <input
+                                            type="checkbox"
+                                            name="status"
+                                            id="status"
+                                            value="1"
+                                        />
                                     </div>
                                 </div>
 
