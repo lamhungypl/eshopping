@@ -2,7 +2,7 @@
 
 <div class="container text-center">
     <div class="logo-404">
-        <a href="index.html"
+        <a href="{{url('/')}}"
             ><img src="{{ asset('images/frontend_images/home/logo.png') }}" alt=""
         /></a>
     </div>
