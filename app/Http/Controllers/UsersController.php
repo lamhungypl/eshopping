@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class UsersController extends Controller
 {
@@ -16,6 +17,7 @@ class UsersController extends Controller
             $data = $request->all();
             // dd($data);
             if (Auth::attempt(['email' => $data['email'], 'password' => $data['password']])) {
+                Session::put('frontSession', $data['email']);
                 return redirect('/');
             } else {
                 return redirect()->back()->with('flash_message_error', 'Invalid username or password.');
@@ -59,6 +61,12 @@ class UsersController extends Controller
     public function logout()
     {
         Auth::logout();
+        Session::forget('frontSession');
         return redirect('/');
+    }
+    public function account(Request $request)
+    {
+        # code...
+        return view('user.account');
     }
 }

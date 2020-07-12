@@ -50,6 +50,13 @@ Route::post('/register', 'UsersController@register');
 Route::match(['get', 'post'], '/check-email', 'UsersController@checkEmail');
 Route::get('/user-logout', 'UsersController@logout');
 
+//private routes
+
+Route::group(['middleware' => ['frontend.login']], function () {
+    //account 
+    Route::match(['get', 'post'], '/account', 'UsersController@account');
+});
+
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/admin/dashboard', 'AdminController@dashboard');
     Route::get('/admin/settings', 'AdminController@settings');
