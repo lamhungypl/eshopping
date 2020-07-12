@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
 {
@@ -13,7 +14,12 @@ class UsersController extends Controller
         # code...
         if ($request->isMethod('post')) {
             $data = $request->all();
-            dd($data);
+            // dd($data);
+            if (Auth::attempt(['email' => $data['email'], 'password' => $data['password']])) {
+                return redirect('/');
+            } else {
+                return redirect()->back()->with('flash_message_error', 'Invalid username or password.');
+            }
         }
         return view('user.login');
     }
@@ -27,17 +33,32 @@ class UsersController extends Controller
             $countUser = User::where('email', $data['email'])->count();
             if ($countUser > 0) {
                 return redirect()->back()->with('flash_message_error', 'Email already existed');
+            } else {
+                $user = new User();
+                $user->name = $data['name'];
+                $user->email = $data['email'];
+                $user->password = bcrypt($data['password']);
+                $user->save();
+
+                if (Auth::attempt(['email' => $data['email'], 'password' => $data['password']])) {
+
+
+                    return redirect('/');
+                }
             }
         }
         return view('user.login');
     }
     public function checkEmail(Request $request)
-
     {
-
         # code...
         $data = $request->all();
         $countUser = User::where('email', $data['email'])->count();
         return $countUser > 0 ? "true" : "false";
+    }
+    public function logout()
+    {
+        Auth::logout();
+        return redirect('/');
     }
 }

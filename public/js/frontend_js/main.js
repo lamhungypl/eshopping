@@ -71,8 +71,13 @@ $(document).ready(function () {
             },
             email: {
                 required: true,
-                email: true,
-                remote: "/check-email"
+                email: true
+                // remote: {
+                //     url: "/check-email",
+                //     data: {
+                //         action: "isUserExist"
+                //     }
+                // }
             }
         },
         messages: {
@@ -88,6 +93,30 @@ $(document).ready(function () {
                 required: "Enter your email",
                 email: "Not a valid email",
                 remote: "Email has already existed"
+            }
+        }
+    });
+
+    //test
+    $("#loginForm").validate({
+        rules: {
+            password: {
+                required: true,
+                minlength: 6
+            },
+            email: {
+                required: true,
+                email: true
+            }
+        },
+        messages: {
+            password: {
+                minlength: "Your password must be at least 6 character",
+                required: "Please provide your password"
+            },
+            email: {
+                required: "Enter your email",
+                email: "Not a valid email"
             }
         }
     });

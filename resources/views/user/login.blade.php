@@ -23,10 +23,6 @@
                             {{ csrf_field() }}
 							<input name="email" type="text" placeholder="Email" />
 							<input name="password" type="text" placeholder="Password" />
-							<span>
-								<input type="checkbox" class="checkbox"> 
-								Keep me signed in
-							</span>
 							<button type="submit" class="btn btn-default">Login</button>
 						</form>
 					</div><!--/login form-->
