@@ -82,7 +82,7 @@
                                             {{--
                                             href="{{url('/admin/delete-coupon/'.$coupon->id )}}"
                                             --}}
-                                            class="btn btn-danger btn-mini btn_delete_prod"
+                                            class="btn btn-danger btn-mini btn_delete_coupon"
                                         >
                                             Delete
                                         </a>

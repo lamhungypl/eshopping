@@ -55,4 +55,12 @@ class CouponsController extends Controller
         // dd($couponDetails);
         return view('admin.coupons.edit_coupon')->with(compact('couponDetails'));
     }
+    public function deleteCoupon(Request $request, $id = null)
+    {
+        # code...
+        $coupon = Coupon::find($id);
+        $coupon->status = 0;
+        $coupon->save();
+        return redirect()->back()->with('flash_message_success', 'Coupon has been deleted');
+    }
 }
