@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Country;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -66,7 +67,27 @@ class UsersController extends Controller
     }
     public function account(Request $request)
     {
-        # code...
-        return view('user.account');
+        $countries = Country::get();
+        $userId = Auth::user()->id;
+
+        $userDetails = User::find($userId);
+        // dd($userDetails);
+        if ($request->isMethod('post')) {
+            $data = $request->all();
+            $userDetails->name = $data['name'];
+            $userDetails->email = $data['email'];
+            $userDetails->address = $data['address'];
+            $userDetails->city = $data['city'];
+            $userDetails->state = $data['state'];
+            $userDetails->country = $data['country'];
+            $userDetails->pin_code = $data['pincode'];
+            $userDetails->mobile = $data['mobile'];
+
+            $userDetails->save();
+            return redirect()->back()->with('flash_message_success', 'updated successfully');
+        }
+
+
+        return view('user.account')->with(compact('countries', 'userDetails'));
     }
 }
