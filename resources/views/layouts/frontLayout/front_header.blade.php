@@ -145,7 +145,7 @@ $mainCategories  = Controller::mainCategories();
                                 <ul role="menu" class="sub-menu">
                                     @foreach ($mainCategories as $cat)
                                     <li>
-                                        <a href="{{url('/products/'.$cat->url)}}">{{$cat->name}}</a>
+                                        <a href="{{url('/categories/'.$cat->url)}}">{{$cat->name}}</a>
                                     </li>
 
                                     @endforeach

@@ -25,7 +25,19 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/logout', 'AdminController@logout');
 
 //list  category page
-Route::get('/products/{url}', 'ProductController@products');
+Route::get('/categories/{url}', 'ProductController@products');
+
+// product detail
+
+Route::get('/products/{id}', 'ProductController@productDetails');
+Route::get('/get-product-price', 'ProductController@getProductPrice');
+
+//cart
+
+Route::match(['get', 'post'], '/add-to-cart', 'ProductController@addToCart');
+Route::match(['get', 'post'], '/cart', 'ProductController@getCart');
+Route::get('/delete-cart-item/{id}', 'ProductController@deleteCartItem');
+Route::post('/update-cart-item/{id}', 'ProductController@updateCartItem');
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/admin/dashboard', 'AdminController@dashboard');
@@ -45,8 +57,18 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/admin/view-products', 'ProductController@viewProducts');
     Route::get('/admin/delete-product-image/{id}', 'ProductController@deleteProductImage');
     Route::get('/admin/delete-product/{id}', 'ProductController@deleteProduct');
+    Route::get('/admin/delete-product-alt-image/{id}', 'ProductController@deleteProductAltImage');
 
     // products attribute admin
     Route::match(['get', 'post'], '/admin/add-attributes/{id}',  'ProductController@addAttributes');
+    Route::match(['get', 'post'], '/admin/edit-attributes/{id}',  'ProductController@editAttributes');
+    Route::match(['get', 'post'], '/admin/add-images/{id}',  'ProductController@addImages');
     Route::get('/admin/delete-attribute/{id}', 'ProductController@deleteAttribute');
+
+
+    //coupons
+    Route::get('/admin/view-coupons', 'CouponsController@viewCoupons');
+    Route::match(['get', 'post'], '/admin/add-coupon', 'CouponsController@addCoupon');
+    Route::match(['get', 'post'], '/admin/edit-coupon/{id}', 'CouponsController@editCoupon');
+    Route::get('/admin/delete-coupon/{id}', 'CouponsController@deleteCoupon');
 });

@@ -44,6 +44,7 @@
     <body>
         @yield('header')
         @yield('content')
+        @yield('extraJS')
         @yield('footer')
 
 

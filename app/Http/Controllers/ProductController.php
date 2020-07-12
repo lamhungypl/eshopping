@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Cart;
 use App\Category;
 use App\Product;
 use App\ProductsAttribute;
+use App\ProductsImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Session;
 use Intervention\Image\ImageManagerStatic as Image;
 
 class ProductController extends Controller
@@ -31,6 +34,7 @@ class ProductController extends Controller
             $product->product_code = $data['product_code'];
             $product->product_color = $data['product_color'];
             $product->description = $data['description'];
+            $product->care = $data['care'];
             if ($request->hasFile('image')) {
 
                 $image_tmp = Input::file('image');
@@ -50,7 +54,7 @@ class ProductController extends Controller
                 }
             }
             $product->price = $data['price'];
-
+            $product->status = empty($data['status']) ? 0 : 1;
             $product->save();
             return redirect('/admin/view-products')->with('flash_message_success', 'product added successfully');
         }
@@ -82,10 +86,10 @@ class ProductController extends Controller
 
         if ($request->isMethod('post')) {
             $data = $request->all();
-            $newImage = '';
+            $status = empty($data['status']) ? 0 : 1;
+            $newImage = $data['currentImage'];
 
             if ($request->hasFile('image')) {
-                $newImage = $data['currentImage'];
                 $currentImage =  $data['currentImage'];
                 $image_tmp = Input::file('image');
                 if ($image_tmp->isValid()) {
@@ -128,8 +132,10 @@ class ProductController extends Controller
                 'product_code' => $data['product_code'],
                 'product_color' => $data['product_color'],
                 'description' => $data['description'],
+                'care' => $data['care'],
                 'price' => $data['price'],
                 'image' => $newImage,
+                'status' => $status
             ]);
             return redirect('/admin/view-products')->with('flash_message_success', 'Product' . $id . ' updated');
         }
@@ -186,13 +192,26 @@ class ProductController extends Controller
     }
     public function addAttributes(Request $request, $id = null)
     {
-        $productDetails = Product::with('attributes')->where(['id' => $id])->first();
+        $productDetails = Product::with('attributes')->where(['id' => $id])->firstOrFail();
         // dd($productDetails);
         if ($request->isMethod('post')) {
             $data = $request->all();
             // dd($data);
             foreach ($data['sku'] as $key => $value) {
                 if (!empty($value)) {
+                    $countSKU = ProductsAttribute::where(['sku' => $value])->count();
+                    if ($countSKU > 0) {
+                        return redirect('/admin/add-attributes/' . $id)->with('flash_message_error', 'SKU ' . $value . 'has already existed!');
+                    }
+
+                    $countSize = ProductsAttribute::where([
+                        'product_id' => $id,
+                        'size' => $data['size'][$key]
+                    ])->count();
+
+                    if ($countSize > 0) {
+                        return redirect('/admin/add-attributes/' . $id)->with('flash_message_error', $data['size'][$key] . ' has already existed!');
+                    }
                     $attribute = new ProductsAttribute();
                     $attribute->product_id = $id;
                     $attribute->sku = $value;
@@ -207,7 +226,86 @@ class ProductController extends Controller
 
         return view('admin.products.add_attributes')->with(compact('productDetails'));
     }
+    public function editAttributes(Request $request, $id = null)
+    {
+        // $productDetails = Product::with('attributes')->where(['id' => $id])->firstOrFail();
+        // dd($productDetails);
+        if ($request->isMethod('post')) {
+            $data = $request->all();
+            dd($data);
+            foreach ($data['idAttr'] as $key => $attr) {
+                ProductsAttribute::where([
+                    'id', $data['idAttr'][$key]
+                ])->update([
+                    'price' => $data['price'][$key],
+                    'stock' => $data['stock'][$key]
+                ]);
+            }
+            return redirect()->back()->with('flash_message_success', 'updated attributes');
+        }
+    }
+    public function addImages(Request $request, $id = null)
+    {
+        $productDetails = Product::with('attributes')->where(['id' => $id])->firstOrFail();
 
+        if ($request->isMethod('post')) {
+            $data = $request->all();
+
+
+            if ($request->hasFile('image')) {
+                $files = $request->file('image');
+
+
+                foreach ($files as $file) {
+                    # code...
+                    $image = new ProductsImage;
+                    $extension = $file->getClientOriginalExtension();
+                    $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . rand(111, 9999) . '.' . $extension;
+
+
+                    $large_image_path = 'images/backend_images/products/large/' . $filename;
+                    $medium_image_path = 'images/backend_images/products/medium/' . $filename;
+                    $small_image_path = 'images/backend_images/products/small/' . $filename;
+
+                    #resize
+                    Image::make($file)->save($large_image_path);
+                    Image::make($file)->resize(600, 600)->save($medium_image_path);
+                    Image::make($file)->resize(300, 300)->save($small_image_path);
+
+
+                    $image->image = $filename;
+                    $image->product_id = $data['product_id'];
+                    $image->save();
+                }
+            }
+
+            return redirect()->back()->with('flash_message_success', 'Product images has been added successfully.');
+        }
+        $productsImages = ProductsImage::where(['product_id' => $id])->get();
+
+        return view('admin.products.add_images')->with(compact('productDetails', 'productsImages'));
+    }
+    public function deleteProductAltImage(Request $request, $id = null)
+    {
+        $productImage = ProductsImage::where(['id' => $id])->first();
+
+        $largePath = public_path('/images/backend_images/products/large/' . $productImage->image);
+        $mediumPath = public_path('/images/backend_images/products/medium/' . $productImage->image);
+        $smallPath = public_path('/images/backend_images/products/small/' . $productImage->image);
+
+        if (File::exists($largePath)) {
+            File::delete($largePath);
+        }
+        if (File::exists($mediumPath)) {
+            File::delete($mediumPath);
+        }
+        if (File::exists($smallPath)) {
+            File::delete($smallPath);
+        }
+
+        ProductsImage::where(['id' => $id])->delete();
+        return redirect()->back()->with('flash_message_success', 'removed product  alternative image');
+    }
     public function deleteAttribute(Request $request, $id = null)
     {
         ProductsAttribute::where(['id' => $id])->delete();
@@ -223,7 +321,7 @@ class ProductController extends Controller
         // dd($products);
         if ($category->parent_id != 0) {
             // if url is sub category
-            $products = Product::where(['category_id' => $category->id])->get();
+            $products = Product::where(['category_id' => $category->id, 'status', 1])->get();
         } else {
             // if url is main category
             $subCategories = Category::where(['parent_id' => $category->id, 'status' => 1])->get()->toArray();
@@ -235,8 +333,110 @@ class ProductController extends Controller
 
             $catIDs = array_merge(array($category->id), $subCatIDs);
 
-            $products = Product::whereIn('category_id', $catIDs)->get();
+            $products = Product::whereIn('category_id', $catIDs)->where('status', 1)->get();
         }
         return view('products.product_list')->with(compact('category', 'products', 'categories'));
+    }
+    public function productDetails(Request $request, $id = null)
+    {
+        $categories = Category::with('categories')->where(['parent_id' => 0])->get();
+        $productDetails = Product::with('attributes')->where(['id' => $id, 'status' => 1])->firstOrFail();
+        $productAltImages = ProductsImage::where(['product_id' => $id])->get();
+
+        $relatedProducts = Product::where('id', '!=', $id)->where('category_id', $productDetails->category_id)->get();
+        $relatedProductsChunks3 = $relatedProducts->chunk(3)->toArray();
+        $mainImage = new ProductsImage(['product_id' => $id, 'image' => $productDetails->image]);
+        $productAltImages->prepend($mainImage);
+
+        $total_stock = ProductsAttribute::where('product_id', $id)->sum('stock');
+        // dd($total_stock);
+        // dd($productAltImages);
+        // dd($productAltImages);
+        return view('products.product_details')->with(compact('relatedProductsChunks3', 'productDetails', 'categories', 'productAltImages', 'total_stock'));
+    }
+    public function getProductPrice(Request $request)
+    {
+        $data = $request->all();
+        $optionArray = explode("-", $data['sizeId']);
+        $productAttribute = ProductsAttribute::where([
+            'product_id' => $optionArray[0],
+            'size' => $optionArray[1],
+
+        ])->first();
+        return $productAttribute->price;
+        // dd($productAttribute);
+    }
+    public function addToCart(Request $request)
+    {
+        if ($request->isMethod('post')) {
+            $data = $request->all();
+            // dd($data);
+            $user_email = empty($data['user_email']) ? '' : $data['user_email'];
+            $session_id = Session::get('session_id');
+            if (empty($session_id)) {
+                $session_id = str_random(40);
+                Session::put('session_id', $session_id);
+            }
+
+            $size =  explode('-', $data['size'])[1];
+
+            $currentCart = Cart::where([
+                'product_id' => $data['product_id'],
+                'product_name' => $data['product_name'],
+                'product_code' => $data['product_code'],
+                'product_color' => $data['product_color'],
+                'size' => $size
+            ])->first();
+            // dd($currentCart);
+            if ($currentCart) {
+                $newQuantity = $currentCart->quantity +  $data['quantity'];
+                // dd($newQuantity);
+                $currentCart->update(['quantity' => $newQuantity]);
+                return redirect('cart')->with('flash_message_success', 'product added to cart');
+            }
+
+            $newCart = new Cart();
+
+            $newCart->product_id = $data['product_id'];
+            $newCart->product_name = $data['product_name'];
+            $newCart->product_code = $data['product_code'];
+            $newCart->product_color = $data['product_color'];
+            $newCart->size = $size;
+            $newCart->price = $data['price'];
+            $newCart->quantity = $data['quantity'];
+            $newCart->user_email = $user_email;
+            $newCart->session_id = $session_id;
+            $newCart->save();
+        }
+        return redirect('cart')->with('flash_message_success', 'product added to cart');
+    }
+    public function getCart(Request $request)
+    {
+        # code...
+        $session_id = Session::get('session_id');
+        $cartList = Cart::where('session_id', $session_id)->get();
+        // dd($cartList);
+        foreach ($cartList as $key => $product) {
+            # code...
+            $productDetails = Product::where('id', $product->product_id)->first();
+            $cartList[$key]->image = $productDetails->image;
+        }
+        return view('products.cart')->with(compact('cartList'));
+    }
+    public function deleteCartItem(Request $request, $id = null)
+    {
+        # code...
+        Cart::where(['id' => $id])->delete();
+
+        return redirect()->back()->with('flash_message_success', 'removed product');
+    }
+    public function updateCartItem(Request $request, $id = null)
+    {
+        # code...
+        if ($request->isMethod('post')) {
+            $data = $request->all();
+            Cart::where(['id' => $id])->update(['quantity' => $data['quantity']]);
+            return response()->json(['success' => true]);
+        }
     }
 }

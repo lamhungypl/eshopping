@@ -299,6 +299,25 @@ $(document).ready(function () {
         });
     });
 
+    $(".btn_delete_coupon").click(function (e) {
+        const id = $(this).attr("rel");
+        const deleteFunction = $(this).attr("rel1");
+        swal({
+            title: "Are you sure?",
+            text: "You will not be able to recover this record again!",
+            icon: "warning",
+            buttons: {
+                cancel: true,
+                confirm: "Yes"
+                // className: "btn-danger"
+            }
+        }).then(function (confirm) {
+            if (confirm) {
+                console.log({ confirm });
+                window.location.href = "/admin/" + deleteFunction + "/" + id;
+            }
+        });
+    });
     $(document).ready(function () {
         var maxField = 10; //Input fields increment limitation
         var addButton = $(".add_button"); //Add button selector
