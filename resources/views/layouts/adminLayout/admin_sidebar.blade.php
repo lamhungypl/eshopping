@@ -1,15 +1,29 @@
+<?php $url = url()->current(); ?>
 <!--sidebar-menu-->
 <div id="sidebar">
     <a href="{{ url('/admin/dashboard') }}" class="visible-phone"
         ><i class="icon icon-home"></i> Dashboard</a
     >
     <ul>
-        <li class="active">
+        <li
+        <?php 
+            if(preg_match('/dashboard/i',$url)){
+                echo  'class="active"';
+            }
+        ?> 
+        >
             <a href="{{ url('/admin/dashboard') }}"
                 ><i class="icon icon-home"></i> <span>Dashboard</span></a
             >
         </li>
-        <li class="submenu">
+        <li 
+            class="submenu" 
+            <?php 
+                if(preg_match('/cate/i',$url)){
+                    echo  'class="active"';
+                }
+            ?> 
+        >
             <a href="#">
                 <i class="icon icon-th-list"></i>
                 <span>Categories</span>
@@ -19,7 +33,13 @@
                 <li>
                     <a href="{{ url('/admin/add-category') }}">Add category</a>
                 </li>
-                <li>
+                <li
+                <?php 
+                if(preg_match('/view-categories/i',$url)){
+                    echo  'class="active"';
+                }
+            ?> 
+                >
                     <a href="{{ url('/admin/view-categories') }}">View Categories</a>
                 </li>
             </ul>
