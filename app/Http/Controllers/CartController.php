@@ -66,4 +66,15 @@ class CartController extends Controller
 
         return view('products.cart');
     }
+    public function checkout(Request $request, $id = null)
+    {
+        if ($request->isMethod('post')) {
+            return view('checkout.order_review');
+        }
+        return view('checkout.billing_address');
+    }
+    public function orderReview(Request $request, $id = null)
+    {
+        return view('checkout.order_review');
+    }
 }

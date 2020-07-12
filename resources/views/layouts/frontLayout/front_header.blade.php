@@ -99,7 +99,7 @@ $mainCategories  = Controller::mainCategories();
                                 <a href="#"><i class="fa fa-star"></i> Wishlist</a>
                             </li>
                             <li>
-                                <a href="checkout.html"
+                                <a href="{{url('/checkout')}}"
                                     ><i class="fa fa-crosshairs"></i> Checkout</a
                                 >
                             </li>

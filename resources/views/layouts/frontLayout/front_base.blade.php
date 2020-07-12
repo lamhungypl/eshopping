@@ -14,6 +14,7 @@
         <link href="{{ asset('css/frontend_css/main.css') }}" rel="stylesheet" />
         <link href="{{ asset('css/frontend_css/responsive.css') }}" rel="stylesheet" />
         <link href="{{ asset('css/frontend_css/styles.css') }}" rel="stylesheet" />
+        <link href="{{ asset('css/frontend_css/custom-styles.css') }}" rel="stylesheet" />
 
         <!--[if lt IE 9]>
             <script src="{{ asset('js/frontend_js/html5shiv.js') }}"></script>
