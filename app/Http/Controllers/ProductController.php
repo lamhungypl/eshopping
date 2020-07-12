@@ -385,6 +385,7 @@ class ProductController extends Controller
                 'product_name' => $data['product_name'],
                 'product_code' => $data['product_code'],
                 'product_color' => $data['product_color'],
+                'session_id' => $session_id,
                 'size' => $size
             ])->first();
             // dd($currentCart);
@@ -415,6 +416,7 @@ class ProductController extends Controller
         # code...
         $session_id = Session::get('session_id');
         $cartList = Cart::where('session_id', $session_id)->get();
+        // dd($cartList);
         // dd($cartList);
         foreach ($cartList as $key => $product) {
             # code...

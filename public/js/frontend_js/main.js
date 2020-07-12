@@ -56,3 +56,68 @@ $(document).ready(function (params) {
         $("#mainImage").attr("src", image);
     });
 });
+$(document).ready(function () {
+    // alert("test");
+    $("#registerForm").validate({
+        rules: {
+            name: {
+                required: true,
+                minlength: 2
+                // lettersonly: true
+            },
+            password: {
+                required: true,
+                minlength: 6
+            },
+            email: {
+                required: true,
+                email: true
+                // remote: {
+                //     url: "/check-email",
+                //     data: {
+                //         action: "isUserExist"
+                //     }
+                // }
+            }
+        },
+        messages: {
+            name: {
+                required: "Please enter your name"
+                // lettersonly: "Only letter acceptable"
+            },
+            password: {
+                minlength: "Your password must be at least 6 character",
+                required: "Please provide your password"
+            },
+            email: {
+                required: "Enter your email",
+                email: "Not a valid email",
+                remote: "Email has already existed"
+            }
+        }
+    });
+
+    //test
+    $("#loginForm").validate({
+        rules: {
+            password: {
+                required: true,
+                minlength: 6
+            },
+            email: {
+                required: true,
+                email: true
+            }
+        },
+        messages: {
+            password: {
+                minlength: "Your password must be at least 6 character",
+                required: "Please provide your password"
+            },
+            email: {
+                required: "Enter your email",
+                email: "Not a valid email"
+            }
+        }
+    });
+});
