@@ -34,7 +34,7 @@
                             <form
                                 class="form-horizontal"
                                 method="post"
-                                action="{{ url('/admin/update-coupon'.$couponDetails->id) }}"
+                                action="{{ url('/admin/edit-coupon/'.$couponDetails->id) }}"
                                 name="add_coupon"
                                 id="add_coupon"
                             >
