@@ -45,16 +45,19 @@
 						</form>
 					</div><!--/account form-->
 				</div>
-
+				<div class="col-sm-1">
+					<h2 class="or">OR</h2>
+				</div>
 				<div class="col-sm-4">
 					<div class="signup-form"><!--sign up form-->
 						<h2>Update password</h2>
-                        <form action="{{url('/register')}}" method="POST" id="registerForm" name="registerForm" autocomplete="off">
+                        <form action="{{url('/account')}}" method="POST" id="updatePassword" name="updatePassword" autocomplete="off">
                             {{ csrf_field() }}
-							<input name="name" type="text" placeholder="Name" />
-							<input name="email" type="email" placeholder="Email Address" autocomplete="off" />
-							<input name="password" type="password" placeholder="Password"/>
-
+							<input name="password" type="text" placeholder="Current password" />
+							<input name="new-password" type="text" placeholder="New password" autocomplete="off" />
+							<input name="confirm-password" type="text" placeholder="Confirm password"/>
+							<button type="submit" class="btn btn-default">Update</button>
+							
 						</form>
 					</div><!--/sign up form-->
 				</div>

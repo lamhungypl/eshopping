@@ -6,6 +6,7 @@ use App\Country;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
 class UsersController extends Controller
@@ -74,14 +75,22 @@ class UsersController extends Controller
         // dd($userDetails);
         if ($request->isMethod('post')) {
             $data = $request->all();
-            $userDetails->name = $data['name'];
-            $userDetails->email = $data['email'];
-            $userDetails->address = $data['address'];
-            $userDetails->city = $data['city'];
-            $userDetails->state = $data['state'];
-            $userDetails->country = $data['country'];
-            $userDetails->pin_code = $data['pincode'];
-            $userDetails->mobile = $data['mobile'];
+            $userDetails->name = !empty($data['name']) ? $data['name'] : $userDetails->name;
+            $userDetails->email = !empty($data['email']) ? $data['email'] : $userDetails->email;
+            $userDetails->address = !empty($data['address']) ? $data['address'] : $userDetails->address;
+            $userDetails->city = !empty($data['city']) ? $data['city'] : $userDetails->city;
+            $userDetails->state = !empty($data['state']) ? $data['state'] : $userDetails->state;
+            $userDetails->country = !empty($data['country']) ? $data['country'] : $userDetails->country;
+            $userDetails->pin_code = !empty($data['pincode']) ? $data['pincode'] : $userDetails->pin_code;
+            $userDetails->mobile = !empty($data['mobile']) ? $data['mobile'] : $userDetails->mobile;
+
+            if (!empty($data['password'])) {
+                if (Hash::check($data['password'], $userDetails->password)) {
+                    $userDetails->password = $data['password'];
+                } else {
+                    return redirect()->back()->with('flash_message_error', 'Incorrect password.');
+                }
+            }
 
             $userDetails->save();
             return redirect()->back()->with('flash_message_success', 'updated successfully');

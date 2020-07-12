@@ -55,6 +55,7 @@ Route::get('/user-logout', 'UsersController@logout');
 Route::group(['middleware' => ['frontend.login']], function () {
     //account 
     Route::match(['get', 'post'], '/account', 'UsersController@account');
+    Route::post('/update-password', 'UsersController@account');
 });
 
 Route::group(['middleware' => ['auth']], function () {
