@@ -1,5 +1,9 @@
 @extends('layouts.frontLayout.front_design') @section('content')
+<?php
+$couponCode =    isset($_SESSION['CouponCode']) ? $_SESSION['CouponCode']: '';
+$couponAmount =    isset($_SESSION['CouponAmount']) ? $_SESSION['CouponAmount']: '';
 
+?>
 <section id="cart_items">
     <div class="container">
         <div class="breadcrumbs">
@@ -107,68 +111,55 @@
         <div class="heading">
             <h3>What would you like to do next?</h3>
             <p>
-                Choose if you have a discount code or reward points you want to use or would like to
-                estimate your delivery cost.
+                Choose if you have a discount code you want to use.
             </p>
         </div>
         <div class="row">
             <div class="col-sm-6">
-                <div class="chose_area">
-                    <ul class="user_option">
-                        <li>
-                            <input type="checkbox" />
-                            <label>Use Coupon Code</label>
-                        </li>
-                        <li>
-                            <input type="checkbox" />
-                            <label>Use Gift Voucher</label>
-                        </li>
-                        <li>
-                            <input type="checkbox" />
-                            <label>Estimate Shipping & Taxes</label>
-                        </li>
-                    </ul>
-                    <ul class="user_info">
-                        <li class="single_field">
-                            <label>Country:</label>
-                            <select>
-                                <option>United States</option>
-                                <option>Bangladesh</option>
-                                <option>UK</option>
-                                <option>India</option>
-                                <option>Pakistan</option>
-                                <option>Ucrane</option>
-                                <option>Canada</option>
-                                <option>Dubai</option>
-                            </select>
-                        </li>
-                        <li class="single_field">
-                            <label>Region / State:</label>
-                            <select>
-                                <option>Select</option>
-                                <option>Dhaka</option>
-                                <option>London</option>
-                                <option>Dillih</option>
-                                <option>Lahore</option>
-                                <option>Alaska</option>
-                                <option>Canada</option>
-                                <option>Dubai</option>
-                            </select>
-                        </li>
-                        <li class="single_field zip-field">
-                            <label>Zip Code:</label>
-                            <input type="text" />
-                        </li>
-                    </ul>
-                    <a class="btn btn-default update" href="">Get Quotes</a>
-                    <a class="btn btn-default check_out" href="">Continue</a>
-                </div>
+                <form action="{{ url('/cart/apply-coupon') }}" method="post">
+                    {{ csrf_field() }}
+                    <div class="chose_area">
+                        <ul class="user_option">
+                            <li>
+                                <label>Coupon Code</label>
+                                <input type="text" name="coupon_code" />
+                                <input type="submit" value="Apply" class="btn btn-default" />
+                            </li>
+                        </ul>
+                    </div>
+                </form>
             </div>
             <div class="col-sm-6">
                 <div class="total_area">
                     <ul>
                         <li>
                             Total <span id="totalAmount">$<?php echo $initTotalAmount; ?></span>
+                        </li>
+                        <li style="display: flex; justify-items: space-between;">
+                            <span>Coupon :</span>
+                            <span id="couponCode" style="flex: 1">
+                            @if (!empty(session('couponCode')))
+                               {{ session('couponCode')}}
+                            @endif    
+                            </span>
+                            <span id="couponAmount">
+                                @if (!empty(session('couponAmount')))
+                                {{session('couponAmount')}}
+                                @else
+                                    0
+                                @endif
+                            </span>
+                        </li>
+                        <li>
+                            Total
+                            <span id="grandTotalAmount">
+                                <span>$</span>
+                                <?php 
+                                    $discount = !empty(session('couponAmount')) ? session('couponAmount') :0;
+                                    echo $initTotalAmount - $discount;
+
+                                ?>
+                            </span>
                         </li>
                     </ul>
                     <a class="btn btn-default update" href="">Update</a>
@@ -191,6 +182,10 @@
         const delButton = document.querySelectorAll(".cart_quantity_down");
         const totals = document.querySelectorAll(".cart_total_price");
         const totalAmountNode = document.getElementById("totalAmount");
+
+        const discountNode = document.getElementById("couponAmount");
+        const grandTotalAmountNode = document.getElementById("grandTotalAmount");
+
 
         const arrayPrice = Array.from(prices);
         const arrayQuantity = Array.from(quantityInput);
@@ -221,6 +216,9 @@
                             newQuantity * parseInt(arrayPrice[index].innerHTML)
                         );
                         totalAmountNode.innerHTML = "$" + totalAmount(arrayTotal);
+                        const discount = parseFloat(discountNode.innerHTML);
+                        grandTotalAmountNode.innerHTML = `$ ${totalAmount(arrayTotal) - discount }`;
+
                     })
                     .catch(function (error) {
                         // console.log(error);
@@ -247,6 +245,8 @@
                             newQuantity * parseInt(arrayPrice[index].innerHTML)
                         );
                         totalAmountNode.innerHTML = "$" + totalAmount(arrayTotal);
+                        const discount = parseFloat(discountNode.innerHTML);
+                        grandTotalAmountNode.innerHTML = `$ ${totalAmount(arrayTotal) - discount }`;
                     })
                     .catch(function (error) {
                         // console.log(error);

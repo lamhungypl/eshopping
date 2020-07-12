@@ -106,7 +106,7 @@ $mainCategories  = Controller::mainCategories();
                                 >
                             </li>
                             <li>
-                                <a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a>
+                                <a href="{{url('/cart')}}"><i class="fa fa-shopping-cart"></i> Cart</a>
                             </li>
                             <li>
                                 <a href="login.html"><i class="fa fa-lock"></i> Login</a>

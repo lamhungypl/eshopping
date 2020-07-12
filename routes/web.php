@@ -39,6 +39,9 @@ Route::match(['get', 'post'], '/cart', 'ProductController@getCart');
 Route::get('/delete-cart-item/{id}', 'ProductController@deleteCartItem');
 Route::post('/update-cart-item/{id}', 'ProductController@updateCartItem');
 
+
+Route::post('cart/apply-coupon', 'CartController@applyCoupon');
+
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/admin/dashboard', 'AdminController@dashboard');
     Route::get('/admin/settings', 'AdminController@settings');
