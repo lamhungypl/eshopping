@@ -109,7 +109,7 @@ $mainCategories  = Controller::mainCategories();
                                 <a href="{{url('/cart')}}"><i class="fa fa-shopping-cart"></i> Cart</a>
                             </li>
                             <li>
-                                <a href="login.html"><i class="fa fa-lock"></i> Login</a>
+                            <a href="{{url('/login')}}"><i class="fa fa-lock"></i> Login</a>
                             </li>
                         </ul>
                     </div>

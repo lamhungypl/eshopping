@@ -42,6 +42,14 @@ Route::post('/update-cart-item/{id}', 'ProductController@updateCartItem');
 
 Route::post('cart/apply-coupon', 'CartController@applyCoupon');
 
+
+
+//user
+Route::match(['get', 'post'], '/login', 'UsersController@login');
+Route::post('/register', 'UsersController@register');
+Route::match(['get', 'post'], '/check-email', 'UsersController@checkEmail');
+
+
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/admin/dashboard', 'AdminController@dashboard');
     Route::get('/admin/settings', 'AdminController@settings');
