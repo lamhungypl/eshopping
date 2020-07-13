@@ -18,14 +18,49 @@
                         <div class="bill-to">
                             <div class="form-one">
                                 <p>Billing address</p>
-                                <input type="text" placeholder="Company Name" />
-                                <input type="text" placeholder="Email*" />
-                                <input type="text" placeholder="Title" />
-                                <input type="text" placeholder="First Name *" />
-                                <input type="text" placeholder="Middle Name" />
-                                <input type="text" placeholder="Last Name *" />
-                                <input type="text" placeholder="Address 1 *" />
-                                <input type="text" placeholder="Address 2" />
+                                <div class="form-group">
+                                    <input type="text" placeholder="Company Name" />
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" placeholder="Email*" />
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" placeholder="Title" />
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" placeholder="First Name *" />
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" placeholder="Middle Name" />
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" placeholder="Last Name *" />
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" placeholder="Address 1 *" />
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" placeholder="Address 2" />
+                                </div>
+
+                                <div
+                                    class="form-check"
+                                    style="display: flex; justify-content: flex-start;"
+                                >
+                                    <input
+                                        type="checkbox"
+                                        class="form-check-input"
+                                        id="copyAddress"
+                                        style="width: auto; margin-right: 16px;"
+                                    />
+                                    <label
+                                        class="form-check-label"
+                                        for="copyAddress"
+                                        style="flex: 1;"
+                                    >
+                                        Shipping Address same as Billing Address
+                                    </label>
+                                </div>
                             </div>
                             <div class="form-two">
                                 <p>Shipping address</p>
