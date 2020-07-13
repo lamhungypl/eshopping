@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Cart;
+use App\Country;
 use App\Coupon;
 use App\Product;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
@@ -68,10 +71,15 @@ class CartController extends Controller
     }
     public function checkout(Request $request, $id = null)
     {
+        $countries = Country::get();
+
         if ($request->isMethod('post')) {
             return view('checkout.order_review');
         }
-        return view('checkout.billing_address');
+        $user_id = Auth::user()->id;
+        $userDetails = User::find($user_id);
+
+        return view('checkout.billing_address')->with(compact('userDetails', 'countries'));
     }
     public function orderReview(Request $request, $id = null)
     {

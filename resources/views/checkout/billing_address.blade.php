@@ -19,25 +19,71 @@
                             <div class="form-one">
                                 <p>Billing address</p>
                                 <div class="form-group">
-                                    <input type="text" placeholder="Company Name" />
+                                    <input
+                                        type="text"
+                                        placeholder="Name"
+                                        name="name"
+                                        value="{{$userDetails->name}}"
+                                    />
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" placeholder="Email*" />
+                                    <input
+                                        type="text"
+                                        placeholder="Email*"
+                                        name="email"
+                                        value="{{$userDetails->email}}"
+                                    />
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" placeholder="Title" />
+                                    <input
+                                        type="text"
+                                        placeholder="City"
+                                        name="city"
+                                        value="{{$userDetails->city}}"
+                                    />
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" placeholder="First Name *" />
+                                    <input
+                                        type="text"
+                                        placeholder="State"
+                                        name="state"
+                                        value="{{$userDetails->state}}"
+                                    />
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" placeholder="Middle Name" />
+                                    <select
+                                        id="countrySelector"
+                                        name="country"
+                                        style="margin-bottom: 10px;"
+                                    >
+                                        <option value="">Select country</option>
+                                        @foreach ($countries as $country)
+                                        <option 
+                                            value="{{$country->country_code}}" 
+                                            @if ($country->country_code == $userDetails->country) 
+                                            selected = 'selected'
+                                            @endif
+                                        >
+                                            {{$country->country_name}}
+                                        </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" placeholder="Last Name *" />
+                                    <input
+                                        type="text"
+                                        placeholder="Pincode"
+                                        name="pincode"
+                                        value="{{$userDetails->pin_code}}"
+                                    />
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" placeholder="Address 1 *" />
+                                    <input
+                                        type="text"
+                                        placeholder="Mobile"
+                                        name="mobile"
+                                        value="{{$userDetails->mobile}}"
+                                    />
                                 </div>
                                 <div class="form-group">
                                     <input type="text" placeholder="Address 2" />
@@ -65,32 +111,22 @@
                             <div class="form-two">
                                 <p>Shipping address</p>
                                 <input type="text" placeholder="Zip / Postal Code *" />
-                                <select>
-                                    <option>-- Country --</option>
-                                    <option>United States</option>
-                                    <option>Bangladesh</option>
-                                    <option>UK</option>
-                                    <option>India</option>
-                                    <option>Pakistan</option>
-                                    <option>Ucrane</option>
-                                    <option>Canada</option>
-                                    <option>Dubai</option>
-                                </select>
-                                <select>
-                                    <option>-- State / Province / Region --</option>
-                                    <option>United States</option>
-                                    <option>Bangladesh</option>
-                                    <option>UK</option>
-                                    <option>India</option>
-                                    <option>Pakistan</option>
-                                    <option>Ucrane</option>
-                                    <option>Canada</option>
-                                    <option>Dubai</option>
-                                </select>
-                                <input type="password" placeholder="Confirm password" />
-                                <input type="text" placeholder="Phone *" />
+                                <select
+                                        id="countrySelector"
+                                        name="country"
+                                        style="margin-bottom: 10px;"
+                                    >
+                                        <option value="">Select country</option>
+                                        @foreach ($countries as $country)
+                                        <option 
+                                            value="{{$country->country_code}}" 
+                                        >
+                                            {{$country->country_name}}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                <input type="text" placeholder="Address" />
                                 <input type="text" placeholder="Mobile Phone" />
-                                <input type="text" placeholder="Fax" />
                             </div>
                         </div>
                     </div>
@@ -102,7 +138,6 @@
                                 placeholder="Notes about your order, Special Notes for Delivery"
                                 rows="16"
                             ></textarea>
-                            <label><input type="checkbox" /> Shipping to bill address</label>
                         </div>
                     </div>
                 </div>
