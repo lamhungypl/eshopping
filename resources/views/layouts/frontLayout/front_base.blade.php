@@ -45,7 +45,6 @@
     <body>
         @yield('header')
         @yield('content')
-        @yield('extraJS')
         @yield('footer')
 
 
@@ -56,6 +55,6 @@
         <script src="{{ asset('js/frontend_js/jquery.prettyPhoto.js') }}"></script>
         <script src="{{ asset('js/frontend_js/main.js') }}"></script>
         <script src="{{ asset('js/backend_js/jquery.validate.js') }}"></script>
-
+        @yield('extraJS')
     </body>
 </html>

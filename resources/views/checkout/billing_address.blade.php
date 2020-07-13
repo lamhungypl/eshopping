@@ -71,6 +71,7 @@
                                 </div>
                                 <div class="form-group">
                                     <input
+                                        id="pincode"
                                         type="text"
                                         placeholder="Pincode"
                                         name="pincode"
@@ -79,6 +80,7 @@
                                 </div>
                                 <div class="form-group">
                                     <input
+                                    id="mobile"
                                         type="text"
                                         placeholder="Mobile"
                                         name="mobile"
@@ -86,7 +88,7 @@
                                     />
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" placeholder="Address 2" />
+                                    <input id="address" type="text" placeholder="Address 2" />
                                 </div>
 
                                 <div
@@ -110,9 +112,9 @@
                             </div>
                             <div class="form-two">
                                 <p>Shipping address</p>
-                                <input type="text" placeholder="Zip / Postal Code *" />
+                                <input id="zipcode" type="text" placeholder="Zip / Postal Code *" />
                                 <select
-                                        id="countrySelector"
+                                        id="countrySelectorShipping"
                                         name="country"
                                         style="margin-bottom: 10px;"
                                     >
@@ -125,8 +127,8 @@
                                         </option>
                                         @endforeach
                                     </select>
-                                <input type="text" placeholder="Address" />
-                                <input type="text" placeholder="Mobile Phone" />
+                                <input type="text" placeholder="Address" id="addressShipping"/>
+                                <input type="text" placeholder="Mobile Phone" id="mobileShipping"/>
                             </div>
                         </div>
                     </div>
@@ -152,4 +154,33 @@
 </section>
 <!--/#cart_items-->
 
+@endsection
+@section('extraJS')
+{{-- <script src="{{ url('js/app.js') }}"></script> --}}
+<script>
+    // ahab! something weird!!
+    $(document).ready(function () {
+     $('#copyAddress').click(function () {
+         if(this.checked){
+            $('#zipcode').val($('#pincode').val());
+            $('#zipcode').attr('readonly',true);
+
+            $('#countrySelectorShipping').val($('#countrySelector').val());
+            $('#countrySelectorShipping').attr('disabled',true);
+
+            $('#addressShipping').val($('#address').val());
+            $('#addressShipping').attr('readonly',true);
+
+            $('#mobileShipping').val($('#mobile').val());
+            $('#mobileShipping').attr('readonly',true);
+         }else{
+            $('#zipcode').attr('readonly',false);
+            $('#countrySelectorShipping').attr('disabled',false);
+            $('#addressShipping').attr('readonly',false);
+            $('#mobileShipping').attr('readonly',false);
+
+         }
+    })
+    });
+</script>
 @endsection
