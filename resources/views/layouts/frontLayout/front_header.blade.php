@@ -99,7 +99,7 @@ $mainCategories  = Controller::mainCategories();
                                 <a href="#"><i class="fa fa-star"></i> Wishlist</a>
                             </li>
                             <li>
-                                <a href="checkout.html"
+                                <a href="{{url('/checkout')}}"
                                     ><i class="fa fa-crosshairs"></i> Checkout</a
                                 >
                             </li>
@@ -112,7 +112,7 @@ $mainCategories  = Controller::mainCategories();
                                 </li>
                             @else
                                 <li>
-                                    <a href="#"><i class="fa fa-user"></i> Account</a>
+                                    <a href="{{url('/account')}}"><i class="fa fa-user"></i> Account</a>
                                 </li>
                                 <li>
                                     <a href="{{url('/user-logout')}}"><i class="fa fa-lock"></i> Logout</a>
@@ -167,7 +167,7 @@ $mainCategories  = Controller::mainCategories();
                                 </ul>
                             </li>
                             <li><a href="404.html">404</a></li>
-                            <li><a href="contact-us.html">Contact</a></li>
+                            <li><a href="{{url('/contact-us')}}">Contact</a></li>
                         </ul>
                     </div>
                 </div>

@@ -163,7 +163,7 @@ $couponAmount =    isset($_SESSION['CouponAmount']) ? $_SESSION['CouponAmount']:
                         </li>
                     </ul>
                     <a class="btn btn-default update" href="">Update</a>
-                    <a class="btn btn-default check_out" href="">Check Out</a>
+                    <a class="btn btn-default check_out" href="{{url('/checkout')}}">Check Out</a>
                 </div>
             </div>
         </div>

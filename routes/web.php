@@ -22,6 +22,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/contact-us', 'HomeController@contactUs');
+
 Route::get('/logout', 'AdminController@logout');
 
 //list  category page
@@ -49,6 +51,18 @@ Route::match(['get', 'post'], '/login', 'UsersController@login');
 Route::post('/register', 'UsersController@register');
 Route::match(['get', 'post'], '/check-email', 'UsersController@checkEmail');
 Route::get('/user-logout', 'UsersController@logout');
+
+//private routes
+
+Route::group(['middleware' => ['frontend.login']], function () {
+    //account 
+    Route::match(['get', 'post'], '/account', 'UsersController@account');
+    Route::post('/update-password', 'UsersController@account');
+    Route::match(['get', 'post'], '/checkout', 'CartController@checkout');
+    Route::match(['get', 'post'], '/checkout/order-review', 'CartController@orderReview');
+    Route::post('/checkout/place-order', 'CartController@placeOrder');
+    Route::match(['get', 'post'], '/checkout/thankyou', 'CartController@thankYou');
+});
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/admin/dashboard', 'AdminController@dashboard');

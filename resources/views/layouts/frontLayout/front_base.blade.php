@@ -14,6 +14,7 @@
         <link href="{{ asset('css/frontend_css/main.css') }}" rel="stylesheet" />
         <link href="{{ asset('css/frontend_css/responsive.css') }}" rel="stylesheet" />
         <link href="{{ asset('css/frontend_css/styles.css') }}" rel="stylesheet" />
+        <link href="{{ asset('css/frontend_css/custom-styles.css') }}" rel="stylesheet" />
 
         <!--[if lt IE 9]>
             <script src="{{ asset('js/frontend_js/html5shiv.js') }}"></script>
@@ -44,7 +45,6 @@
     <body>
         @yield('header')
         @yield('content')
-        @yield('extraJS')
         @yield('footer')
 
 
@@ -55,6 +55,6 @@
         <script src="{{ asset('js/frontend_js/jquery.prettyPhoto.js') }}"></script>
         <script src="{{ asset('js/frontend_js/main.js') }}"></script>
         <script src="{{ asset('js/backend_js/jquery.validate.js') }}"></script>
-
+        @yield('extraJS')
     </body>
 </html>
