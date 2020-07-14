@@ -416,8 +416,7 @@ class ProductController extends Controller
         # code...
         $session_id = Session::get('session_id');
         $cartList = Cart::where('session_id', $session_id)->get();
-        // dd($cartList);
-        // dd($cartList);
+
         foreach ($cartList as $key => $product) {
             # code...
             $productDetails = Product::where('id', $product->product_id)->first();

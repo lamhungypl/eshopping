@@ -22,6 +22,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/contact-us', 'HomeController@contactUs');
+
 Route::get('/logout', 'AdminController@logout');
 
 //list  category page
@@ -58,6 +60,8 @@ Route::group(['middleware' => ['frontend.login']], function () {
     Route::post('/update-password', 'UsersController@account');
     Route::match(['get', 'post'], '/checkout', 'CartController@checkout');
     Route::match(['get', 'post'], '/checkout/order-review', 'CartController@orderReview');
+    Route::post('/checkout/place-order', 'CartController@placeOrder');
+    Route::match(['get', 'post'], '/checkout/thankyou', 'CartController@thankYou');
 });
 
 Route::group(['middleware' => ['auth']], function () {

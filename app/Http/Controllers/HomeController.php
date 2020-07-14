@@ -25,4 +25,8 @@ class HomeController extends Controller
     {
         return view('home');
     }
+    public function contactUs(Request $request)
+    {
+        return view('pages.contact_us');
+    }
 }
