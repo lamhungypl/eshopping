@@ -114,6 +114,18 @@
 </style>
 @endsection @section('content')
 <section>
+    <div class="col-md-12">
+        <div class="col-md-1"></div>
+        <div class="col-md-11">
+            <div class="breadcrumbs">
+                <ol class="breadcrumb">
+                    <li><a href="#">Order</a></li>
+                    <li class="active">Order Detail</li>
+                </ol>
+            </div>
+        </div>
+        
+    </div>
     <div class="col-md-2"></div>
     <div class="col-md-8">
         <div class="container">
@@ -129,11 +141,15 @@
                             <div class="panel-body">
                                 <div class="col-md-12">
                                     <strong>Subtotal </strong>
-                                    <div class="pull-right"><span>$</span><span>{{$orderDetails->subtotal}}</span></div>
+                                    <div class="pull-right">
+                                        <span>$</span><span>{{$orderDetails->subtotal}}</span>
+                                    </div>
                                 </div>
                                 <div class="col-md-12">
                                     <strong>discount</strong>
-                                    <div class="pull-right"><span>$</span><span>{{$orderDetails->coupon_amount}}</span></div>
+                                    <div class="pull-right">
+                                        <span>$</span><span>{{$orderDetails->coupon_amount}}</span>
+                                    </div>
                                 </div>
                                 <div class="col-md-12">
                                     <small>Shipping</small>
@@ -142,7 +158,9 @@
                                 </div>
                                 <div class="col-md-12">
                                     <strong>Order Total</strong>
-                                    <div class="pull-right"><span>$</span><span>{{$orderDetails->total}}</span></div>
+                                    <div class="pull-right">
+                                        <span>$</span><span>{{$orderDetails->total}}</span>
+                                    </div>
                                     <hr />
                                 </div>
                             </div>
@@ -157,19 +175,19 @@
                                 <table class="table borderless">
                                     <thead>
                                         <tr>
-                                            <td><strong>Invoice: {{$orderDetails->id}}</strong></td>
+                                            <td>
+                                                <strong>Invoice: {{$orderDetails->id}}</strong>
+                                            </td>
                                             <td></td>
                                             <td></td>
                                             <td></td>
                                         </tr>
                                         <tr>
-
                                             <th>Product</th>
                                             <th class="text-center">Size</th>
                                             <th class="text-center">Price</th>
                                             <th class="text-center">Quantity</th>
                                             <th class="text-center">Subtotal</th>
-
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -186,8 +204,12 @@
                                                         />
                                                     </a>
                                                     <div class="media-body">
-                                                        <h5 class="media-heading">{{$item->product_name}}</h5>
-                                                        <h5 class="media-heading">{{$item->product_code}}</h5>
+                                                        <h5 class="media-heading">
+                                                            {{$item->product_name}}
+                                                        </h5>
+                                                        <h5 class="media-heading">
+                                                            {{$item->product_code}}
+                                                        </h5>
                                                     </div>
                                                 </div>
                                             </td>
@@ -195,10 +217,11 @@
 
                                             <td class="text-center">${{$item->price}}</td>
                                             <td class="text-center">{{$item->quantity}}</td>
-                                            <td class="text-center ">${{$item->price* $item->quantity}}</td>
+                                            <td class="text-center">
+                                                ${{$item->price* $item->quantity}}
+                                            </td>
                                         </tr>
                                         @endforeach
-                                        
                                     </tbody>
                                 </table>
                             </div>
