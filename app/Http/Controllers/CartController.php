@@ -118,6 +118,8 @@ class CartController extends Controller
             $newOrder->order_note = $data['orderNote'];
             $newOrder->coupon_code = $data['couponCode'];
             $newOrder->coupon_amount = $data['couponAmount'];
+            $newOrder->subtotal = $data['subtotal'];
+            $newOrder->total = $data['total'];
 
             // dd($newOrder);
             $newOrder->save();

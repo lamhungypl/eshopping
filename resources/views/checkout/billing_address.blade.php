@@ -237,7 +237,9 @@
                                 <table class="table table-condensed total-result">
                                     <tr>
                                         <td>Cart Sub Total</td>
-                                        <td>$<?php echo $initTotalAmount; ?></td>
+                                        <td>$<?php echo $initTotalAmount; ?>
+                                        <input type="hidden" name="subtotal" value="{{$initTotalAmount}}">
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>Discount</td>
@@ -250,7 +252,9 @@
                                     </tr>
                                     <tr>
                                         <td>Total</td>
-                                        <td><span>${{$initTotalAmount - $discount}}</span></td>
+                                        <td><span>${{$initTotalAmount - $discount}}</span>
+                                        <input type="hidden" name="total" value="{{$initTotalAmount - $discount}}">
+                                        </td>
                                     </tr>
                                 </table>
                             </td>

@@ -62,6 +62,8 @@ Route::group(['middleware' => ['frontend.login']], function () {
     Route::match(['get', 'post'], '/checkout/order-review', 'CartController@orderReview');
     Route::post('/checkout/place-order', 'CartController@placeOrder');
     Route::match(['get', 'post'], '/checkout/thankyou', 'CartController@thankYou');
+    Route::get('/account/order-history', 'OrdersController@orderHistory');
+    Route::get('/account/orders/{id}', 'OrdersController@orderDetails');
 });
 
 Route::group(['middleware' => ['auth']], function () {
