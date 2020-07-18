@@ -22,6 +22,7 @@
         />
         <link rel="stylesheet" href="{{ asset('css/backend_css/select2.css') }}" />
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+        @yield('customCSS')
     </head>
     <body>
         @include('layouts.adminLayout.admin_header') @include('layouts.adminLayout.admin_sidebar')

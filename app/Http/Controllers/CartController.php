@@ -145,6 +145,9 @@ class CartController extends Controller
                 $orderItem->save();
             }
             $request->session()->forget('session_id');
+            $request->session()->forget('CouponAmount');
+            $request->session()->forget('CouponCode');
+
             return redirect('/checkout/thankyou');
         }
         print_r('place order');
