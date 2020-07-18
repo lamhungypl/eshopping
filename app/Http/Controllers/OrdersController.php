@@ -35,4 +35,12 @@ class OrdersController extends Controller
         // dd($users);
         return view('admin.orders.view_orders')->with(compact('orders', 'users'));
     }
+    public function viewAdminOrder(Request $request, $id = null)
+    {
+        $order = Order::with('items')->where('id', $id)->first();
+        $user = User::find($order->user_id);
+        // dd($user);
+
+        return view('admin.orders.view_order_details')->with(compact('order', 'user'));
+    }
 }

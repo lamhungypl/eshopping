@@ -101,4 +101,5 @@ Route::group(['middleware' => ['auth']], function () {
 
     //orders
     Route::get('/admin/orders', 'OrdersController@viewOrders');
+    Route::get('/admin/orders/{id}', 'OrdersController@viewAdminOrder');
 });
