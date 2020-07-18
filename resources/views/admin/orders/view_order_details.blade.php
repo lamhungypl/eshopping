@@ -100,6 +100,27 @@
 @section('content')
 
 <div id="content">
+    <div id="content-header">
+        <div id="breadcrumb">
+            <a href="{{ url('/admin/dashboard') }}" title="Go to Home" class="tip-bottom"
+                ><i class="icon-home"></i> Admin</a
+            >
+            <a href="{{ url('/admin/orders') }}">Order</a>
+            <a href="#" class="current">View Order Details</a>
+        </div>
+        <h1>Order Details   </h1>
+        @if (Session::has('flash_message_error'))
+        <div class="alert alert-error alert-block">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{ session("flash_message_error") }}</strong>
+        </div>
+        @endif @if (Session::has('flash_message_success'))
+        <div class="alert alert-success alert-block">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{ session("flash_message_success") }}</strong>
+        </div>
+        @endif
+    </div>
     <div class="layout-content">
         <div class="col-left"></div>
         <div class="col-content">

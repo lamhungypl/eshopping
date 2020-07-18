@@ -2,11 +2,10 @@
 <div id="content">
     <div id="content-header">
         <div id="breadcrumb">
-            <a href="index.html" title="Go to Home" class="tip-bottom"
-                ><i class="icon-home"></i> Home</a
+            <a href="{{ url('/admin/dashboard') }}" title="Go to Home" class="tip-bottom"
+                ><i class="icon-home"></i> Admin</a
             >
-            <a href="#">Products</a>
-            <a href="#" class="current">View Orders</a>
+            <a href="#" class="current">View Orders List</a>
         </div>
         <h1>Orders</h1>
         @if (Session::has('flash_message_error'))
