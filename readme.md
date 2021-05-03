@@ -1,6 +1,6 @@
 # Online Store
 
-Open source and web final project.
+Open source and web final project. PHP website.
 
 ## Tools
 
